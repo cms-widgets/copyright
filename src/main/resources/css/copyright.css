@@ -1,0 +1,8 @@
+.[[${componentId}]].copyright{
+    color:[[${properties.copyTColor}]];
+    background: [[${properties.copyBColor}]];
+    font-size: [[${properties.copyFSize}]];
+    padding-top:[[${properties.copyPTop}]];
+    padding-bottom:[[${properties.copyPBottom}]];
+    font-weight:[[${properties.copyTBold}?'bold':'normal']];
+}
