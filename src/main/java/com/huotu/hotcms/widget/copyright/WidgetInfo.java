@@ -16,6 +16,7 @@ import me.jiangcai.lib.resource.service.ResourceService;
 import org.apache.http.entity.ContentType;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.HashMap;
@@ -82,28 +83,27 @@ public class WidgetInfo implements Widget{
         return new WidgetStyle[]{new DefaultWidgetStyle()};
     }
 
-
-    @Override
-    public Resource widgetJs() {
-        return new ClassPathResource("js/copyright.js", getClass().getClassLoader());
-    }
-
-
     @Override
     public Map<String, Resource> publicResources() {
         Map<String, Resource> map = new HashMap<>();
         map.put("thumbnail/defaultStyleThumbnail.png",new ClassPathResource("thumbnail/defaultStyleThumbnail.png"
                 ,getClass().getClassLoader()));
+        map.put("js/copyright.js",new ClassPathResource("js/copyright.js"
+                ,getClass().getClassLoader()));
         return map;
     }
 
     @Override
-    public Resource widgetDependencyContent(ContentType contentType) {
-        if (contentType.getMimeType().equalsIgnoreCase("text/css")){
+    public Resource widgetDependencyContent(MediaType mediaType) {
+        if (mediaType.isCompatibleWith(CSS)){
             return  new ClassPathResource("css/copyright.css",getClass().getClassLoader());
+        }
+        if (mediaType.isCompatibleWith(Javascript)){
+            return  new ClassPathResource("js/copyright.js",getClass().getClassLoader());
         }
         return null;
     }
+
 
     @Scheduled
     @Override
@@ -150,7 +150,7 @@ public class WidgetInfo implements Widget{
         properties.put(VALID_COPY_BCOLOR,"#fff");
         properties.put(VALID_COPY_TCOLOR,"#000000");
         properties.put(VALID_COPY_FSIZE,"16px");
-        properties.put(VALID_COPY_TBOLD,true);
+        properties.put(VALID_COPY_TBOLD,"true");
         properties.put(VALID_COPY_CONTENT,"Copyright&copy;2013-2016.\n" +"杭州火图科技有限公司. 浙ICP备13027761号-5");
         return properties;
     }

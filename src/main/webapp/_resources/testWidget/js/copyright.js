@@ -1,15 +1,17 @@
 /**
  * Created by admin on 2016/6/24.
  */
-var copyright = {
+CMSWidgets.initWidget({
+// 编辑器相关
+    editor: {
     properties: null,
-    saveComponent: function () {
+    saveComponent: function (onSuccess, onFailed) {
         var me = this;
         $.each($(".copyPTop"), function (i, obj) {
-            me.properties.copyPTop = $(obj).val();
+            me.properties.copyPTop = $(obj).val()+"px";
         });
         $.each($(".copyPBottom"), function (i, obj) {
-            me.properties.copyPBottom = $(obj).val();
+            me.properties.copyPBottom = $(obj).val()+"px";
         });
         $.each($(".copyBColor"), function (i, obj) {
             me.properties.copyBColor = $(obj).val();
@@ -27,6 +29,7 @@ var copyright = {
             me.properties.copyContent = $(obj).val();
         });
 
+        onSuccess(me.properties)
         return me.properties;
     },
     initProperties:function(){
@@ -38,8 +41,9 @@ var copyright = {
          this.properties.copyTBold = ""
          this.properties.copyContent =""
     },
-    init: function (globalId) {
+    open: function (globalId) {
         this.properties = widgetProperties(globalId);
         this.initProperties();
     }
-};
+}
+})

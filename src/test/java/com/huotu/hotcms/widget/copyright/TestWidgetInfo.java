@@ -55,21 +55,7 @@ public class TestWidgetInfo extends WidgetTest {
 
     @Override
     protected void browseWork(Widget widget, WidgetStyle style, Function<ComponentProperties, WebElement> uiChanger) {
-        uiChanger = (properties) -> {
-            widgetViewController.setCurrentProperties(properties);
-            String uri = "/browse/" + WidgetTestConfig.WidgetIdentity(widget) + "/" + style.id();
-            if (printPageSource())
-                try {
-                    mockMvc.perform(get(uri))
-                            .andDo(print());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    throw new IllegalStateException("no print html");
-                }
-            driver.get("http://localhost" + uri);
-            WebElement webElement = driver.findElement(By.id("browse")).findElement(By.tagName("div"));
-            return webElement;
-        };
+
         ComponentProperties componentProperties = new ComponentProperties();
         ComponentProperties properties = new ComponentProperties();
         properties.put("copyPTop","20px");
