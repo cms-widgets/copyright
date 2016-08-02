@@ -56,7 +56,6 @@ public class TestWidgetInfo extends WidgetTest {
     @Override
     protected void browseWork(Widget widget, WidgetStyle style, Function<ComponentProperties, WebElement> uiChanger) {
 
-        ComponentProperties componentProperties = new ComponentProperties();
         ComponentProperties properties = new ComponentProperties();
         properties.put("copyPTop","20px");
         properties.put("copyPBottom",  "20px");
@@ -65,9 +64,8 @@ public class TestWidgetInfo extends WidgetTest {
         properties.put("copyFSize", "19px");
         properties.put("copyTBold", "true");
         properties.put("copyContent", "火图的版权信息");
-        componentProperties.put("properties", properties);
 
-        WebElement webElement = uiChanger.apply(componentProperties);
+        WebElement webElement = uiChanger.apply(properties);
 
         List<WebElement> copyrightA = webElement.findElements(By.className("copyright"));
         assertThat(copyrightA.size()).isEqualTo(1);
