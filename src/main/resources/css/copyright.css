@@ -1,8 +1,6 @@
-.[[${componentId}]].copyright{
-    color:[[${properties['copyTColor']}]];
-    background: [[${properties['copyBColor']}]];
-    font-size: [[${properties['copyFSize']}]];
-    padding-top:[[${properties['copyPTop']}]];
-    padding-bottom:[[${properties['copyPBottom']}]];
-    font-weight:[[${properties['copyTBold']}?'bold':'normal']];
+#/*[[${componentId}]]*/.copyright{
+    background: /*[[${properties['copyBColor']}]]*/ #fff;
+}
+#/*[[${componentId}]]*/.copyright a, #/*[[${componentId}]]*/.copyright p {
+   color:/*[[${properties['copyTColor']}]]*/ #444;
 }

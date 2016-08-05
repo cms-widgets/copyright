@@ -9,17 +9,21 @@
 
 package com.huotu.hotcms.widget.copyright;
 
+import com.huotu.hotcms.service.entity.support.WidgetIdentifier;
 import com.huotu.hotcms.widget.ComponentProperties;
 import com.huotu.hotcms.widget.Widget;
 import com.huotu.hotcms.widget.WidgetStyle;
 import me.jiangcai.lib.resource.service.ResourceService;
-import org.apache.http.entity.ContentType;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -27,14 +31,14 @@ import java.util.Map;
 /**
  * @author CJ
  */
-public class WidgetInfo implements Widget{
-    public static final String VALID_COPY_PTOP = "copyPTop";
-    public static final String VALID_COPY_PBOTTOM = "copyPBottom";
+public class WidgetInfo implements Widget {
+    public static final String VALID_COPY_ADDRESS = "companyAddress";
+    public static final String VALID_COPY_INFORMATION = "contactInformation";
     public static final String VALID_COPY_BCOLOR = "copyBColor";
     public static final String VALID_COPY_TCOLOR = "copyTColor";
-    public static final String VALID_COPY_FSIZE = "copyFSize";
-    public static final String VALID_COPY_TBOLD = "copyTBold";
-    public static final String VALID_COPY_CONTENT = "copyContent";
+    public static final String VALID_COPY_CONTENT = "copyrightContent";
+    public static final String VALID_COPY_QRCODE_URI = "QRcodeUri";
+    public static final String VALID_COPY_PAGElINKS = "pageLinkList";
 
     /*
      * 指定风格的模板类型 如：html,text等
@@ -82,20 +86,20 @@ public class WidgetInfo implements Widget{
     @Override
     public Map<String, Resource> publicResources() {
         Map<String, Resource> map = new HashMap<>();
-        map.put("thumbnail/defaultStyleThumbnail.png",new ClassPathResource("thumbnail/defaultStyleThumbnail.png"
-                ,getClass().getClassLoader()));
-        map.put("js/copyright.js",new ClassPathResource("js/copyright.js"
-                ,getClass().getClassLoader()));
+        map.put("thumbnail/defaultStyleThumbnail.png", new ClassPathResource("thumbnail/defaultStyleThumbnail.png"
+                , getClass().getClassLoader()));
+        map.put("img/code.jpg", new ClassPathResource("img/code.jpg", getClass().getClassLoader()));
+        map.put("js/copyright.js", new ClassPathResource("js/copyright.js", getClass().getClassLoader()));
         return map;
     }
 
     @Override
     public Resource widgetDependencyContent(MediaType mediaType) {
-        if (mediaType.isCompatibleWith(CSS)){
-            return  new ClassPathResource("css/copyright.css",getClass().getClassLoader());
+        if (mediaType.isCompatibleWith(CSS)) {
+            return new ClassPathResource("css/copyright.css", getClass().getClassLoader());
         }
-        if (mediaType.isCompatibleWith(Javascript)){
-            return  new ClassPathResource("js/copyright.js",getClass().getClassLoader());
+        if (mediaType.isCompatibleWith(Javascript)) {
+            return new ClassPathResource("js/copyright.js", getClass().getClassLoader());
         }
         return null;
     }
@@ -118,16 +122,15 @@ public class WidgetInfo implements Widget{
             throw new IllegalArgumentException();
         }
         //加入控件独有的属性验证
-        String copyPTop = (String) componentProperties.get(VALID_COPY_PTOP);
-        String copyPBottom = (String) componentProperties.get(VALID_COPY_PBOTTOM);
+        String copyPTop = (String) componentProperties.get(VALID_COPY_ADDRESS);
+        String copyPBottom = (String) componentProperties.get(VALID_COPY_INFORMATION);
         String copyBColor = (String) componentProperties.get(VALID_COPY_BCOLOR);
         String copyTColor = (String) componentProperties.get(VALID_COPY_TCOLOR);
-        String bold = (String) componentProperties.get(VALID_COPY_TBOLD);
-        String copyFSize = (String) componentProperties.get(VALID_COPY_FSIZE);
         String copyContent = (String) componentProperties.get(VALID_COPY_CONTENT);
-        if (copyPTop == null || copyPBottom == null || copyBColor == null || copyTColor == null || bold == null
-                || copyFSize == null || copyContent==null || copyPTop.equals("") || copyPBottom.equals("")
-                || copyBColor.equals("") || copyTColor.equals("") || copyFSize.equals("")|| copyContent.equals("")) {
+        List<Map> pageLinks = (List<Map>) componentProperties.get(VALID_COPY_PAGElINKS);
+        if (copyPTop == null || copyPBottom == null || copyBColor == null || copyTColor == null
+               || pageLinks==null || copyContent == null || copyPTop.equals("") || copyPBottom.equals("")
+                || copyBColor.equals("") || copyTColor.equals("") || copyContent.equals("") ||pageLinks.size()==0) {
             throw new IllegalArgumentException("控件属性缺少");
         }
 
@@ -139,15 +142,31 @@ public class WidgetInfo implements Widget{
     }
 
     @Override
-    public ComponentProperties defaultProperties(ResourceService resourceService) {
+    public ComponentProperties defaultProperties(ResourceService resourceService) throws IOException {
         ComponentProperties properties = new ComponentProperties();
-        properties.put(VALID_COPY_PTOP,"10px");
-        properties.put(VALID_COPY_PBOTTOM,"10px");
-        properties.put(VALID_COPY_BCOLOR,"#fff");
-        properties.put(VALID_COPY_TCOLOR,"#000000");
-        properties.put(VALID_COPY_FSIZE,"16px");
-        properties.put(VALID_COPY_TBOLD,"true");
-        properties.put(VALID_COPY_CONTENT,"Copyright&copy;2013-2016.\n" +"杭州火图科技有限公司. 浙ICP备13027761号-5");
+        WidgetIdentifier identifier = new WidgetIdentifier(groupId(), widgetId(), version());
+        properties.put(VALID_COPY_ADDRESS, "400-1818-357 加盟热线：400-1008-013");
+        properties.put(VALID_COPY_INFORMATION, "杭州市滨江区阡陌路482号智慧e谷B幢4楼");
+        properties.put(VALID_COPY_BCOLOR, "#fff");
+        properties.put(VALID_COPY_TCOLOR, "#000000");
+        properties.put(VALID_COPY_CONTENT, "Copyright&copy;2013-2016." + "杭州火图科技有限公司. 浙ICP备13027761号-5");
+        try {
+            properties.put(VALID_COPY_QRCODE_URI, resourceService.getResource("widget/" + identifier.toURIEncoded()
+                    + "/img/code.jpg").httpUrl().toURI().toString());
+        } catch (URISyntaxException e) {
+            throw new IOException(e);
+        }
+        List<Map<String,Object>> pageLinks = new ArrayList<>();
+        Map<String,Object> map = new HashMap();
+        map.put("name","链接");
+        map.put("url","url");
+        pageLinks.add(map);
+        pageLinks.add(map);
+        pageLinks.add(map);
+        pageLinks.add(map);
+        pageLinks.add(map);
+        pageLinks.add(map);
+        properties.put(VALID_COPY_PAGElINKS,pageLinks);
         return properties;
     }
 

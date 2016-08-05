@@ -7,11 +7,11 @@ CMSWidgets.initWidget({
         properties: null,
         saveComponent: function (onSuccess, onFailed) {
             var me = this;
-            $.each($(".copyPTop"), function (i, obj) {
-                me.properties.copyPTop = $(obj).val() + "px";
+            $.each($(".contactInformation"), function (i, obj) {
+                me.properties.contactInformation = $(obj).val();
             });
-            $.each($(".copyPBottom"), function (i, obj) {
-                me.properties.copyPBottom = $(obj).val() + "px";
+            $.each($(".companyAddress"), function (i, obj) {
+                me.properties.companyAddress = $(obj).val();
             });
             $.each($(".copyBColor"), function (i, obj) {
                 me.properties.copyBColor = $(obj).val();
@@ -19,31 +19,45 @@ CMSWidgets.initWidget({
             $.each($(".copyTColor"), function (i, obj) {
                 me.properties.copyTColor = $(obj).val();
             });
-            $.each($(".copyFSize"), function (i, obj) {
-                me.properties.copyFSize = $(obj).val() + "px";
+            $.each($(".copyrightContent"), function (i, obj) {
+                me.properties.copyrightContent = $(obj).val();
             });
-            $.each($(".copyTBold"), function (i, obj) {
-                me.properties.copyTBold = $(obj).is(":checked");
-            });
-            $.each($(".copyContent"), function (i, obj) {
-                me.properties.copyContent = $(obj).val();
-            });
-
-            onSuccess(me.properties)
+            if (me.properties.contactInformation=='' || me.properties.companyAddress=='' || me.properties.copyrightContent==''){
+                onFailed("控件缺乏参数，请填写参数");
+                return;
+            }
+            onSuccess(me.properties);
             return me.properties;
         },
+        uploadImage: function () {
+            uploadForm({
+                ui: '#copyrightImage',
+                inputName: 'file',
+                maxWidth: 200,
+                maxHeight: 200,
+                maxFileCount: 1,
+                isCongruent: false,
+                successCallback: function (files, data, xhr, pd) {
+                    editor.properties.QRcodeUri = data.fileUri;
+                },
+                deleteCallback: function (resp, data, jqXHR) {
+                    editor.properties.QRcodeUri = "";
+                }
+            });
+        },
         initProperties: function () {
-            this.properties.copyPTop = "10px";
-            this.properties.copyPBottom = "20px";
-            this.properties.copyBColor = "#000000"
-            this.properties.copyTColor = "#000000"
-            this.properties.copyFSize = ""
-            this.properties.copyTBold = ""
-            this.properties.copyContent = ""
+            this.properties.copyBColor = "#000000";
+            this.properties.copyTColor = "#000000";
+            this.properties.companyAddress = "";
+            this.properties.contactInformation = "";
+            this.properties.copyrightContent = "";
+            this.properties.pageLinkList = [];
+            this.properties.QRcodeUri = "";
         },
         open: function (globalId) {
             this.properties = widgetProperties(globalId);
             this.initProperties();
+            this.uploadImage();
         },
         close: function (globalId) {
 
