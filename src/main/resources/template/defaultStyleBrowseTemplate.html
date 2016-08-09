@@ -3,7 +3,7 @@
     <div class="col-sm-8 col-lg-10">
         <ul class="list-unstyled">
             <li th:each="pageLink:${properties['pageLinkList']}">
-                <a class="copyright" th:href="@{/_web/}+${pageLink['url']}" href="index.html" th:title="${pageLink['name']}"
+                <a class="copyright" th:href="@{/_web/}+${pageLink['pagePath']}" href="index.html"
                    th:text="${pageLink['name']}">首页</a>
             </li>
         </ul>

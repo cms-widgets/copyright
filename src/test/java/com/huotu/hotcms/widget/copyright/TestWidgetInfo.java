@@ -3,6 +3,7 @@ package com.huotu.hotcms.widget.copyright;
 import com.huotu.hotcms.widget.ComponentProperties;
 import com.huotu.hotcms.widget.Widget;
 import com.huotu.hotcms.widget.WidgetStyle;
+import com.huotu.hotcms.widget.entity.PageInfo;
 import com.huotu.widget.test.WidgetTest;
 import com.huotu.widget.test.bean.WidgetViewController;
 import org.junit.Test;
@@ -48,6 +49,10 @@ public class TestWidgetInfo extends WidgetTest {
         assertThat(ps.get("contactInformation")).isEqualTo("abc");
         assertThat(ps.get("companyAddress")).isEqualTo("abc");
         assertThat(ps.get("copyrightContent")).isEqualTo("abc");
+
+        List<WebElement> lis = editor.findElement(By.id("treeView")).findElements(By.tagName("li"));
+        assertThat(lis.size()).isNotEqualTo(0);
+        assertThat(lis.size()).isEqualTo(2);
     }
 
 
@@ -62,24 +67,41 @@ public class TestWidgetInfo extends WidgetTest {
         properties.put(WidgetInfo.VALID_COPY_CONTENT, "Copyright&copy;2013-2016." + "杭州火图科技有限公司. 浙ICP备13027761号-5");
         properties.put(WidgetInfo.VALID_COPY_QRCODE_URI, "http://placehold.it/100x100?text=二维码");
 
-        List<Map<String, Object>> pageLinks = new ArrayList<>();
-        Map<String, Object> map = new HashMap();
-        map.put("name", "链接");
-        map.put("url", "url");
-        pageLinks.add(map);
-        pageLinks.add(map);
-        pageLinks.add(map);
-        pageLinks.add(map);
-        pageLinks.add(map);
-        pageLinks.add(map);
-        properties.put(WidgetInfo.VALID_COPY_PAGElINKS, pageLinks);
+        List<Map<String,Object>> pageLinks = new ArrayList<>();
+        PageInfo pageInfo1 = new PageInfo();
+        pageInfo1.setTitle("首页");
+        pageInfo1.setPagePath("");
+        pageInfo1.setPageId(1L);
 
+        PageInfo pageInfo2 = new PageInfo();
+        pageInfo2.setTitle("新闻");
+        pageInfo2.setPagePath("xw");
+        pageInfo2.setPageId(2L);
+
+
+        PageInfo pageInfo3 = new PageInfo();
+        pageInfo3.setTitle("关于我们");
+        pageInfo3.setPagePath("guwm");
+        pageInfo3.setPageId(3L);
+
+        List<PageInfo> pageInfos = new ArrayList<>();
+        pageInfos.add(pageInfo1);
+        pageInfos.add(pageInfo2);
+        pageInfos.add(pageInfo3);
+        for (PageInfo pageInfo : pageInfos) {
+            Map<String,Object> map = new HashMap<>();
+            map.put("name",pageInfo.getTitle());
+            map.put("pagePath",pageInfo.getPagePath());
+            map.put("id",pageInfo.getPageId());
+            map.put("pid",pageInfo.getParent() != null ? pageInfo.getParent().getPageId() : 0);
+            pageLinks.add(map);
+        }
+        properties.put(WidgetInfo.VALID_COPY_PAGElINKS, pageLinks);
         WebElement webElement = uiChanger.apply(properties);
 
         List<WebElement> list = webElement.findElements(By.tagName("li"));
         assertThat(list).isNotEmpty();
-        assertThat(list.size()).isEqualTo(6);
-
+        assertThat(list.size()).isEqualTo(3);
         WebElement infomartion = webElement.findElement(By.className("copyright-contact"));
         WebElement address = webElement.findElement(By.className("copyright-address"));
         WebElement content = webElement.findElement(By.className("copyright-content"));

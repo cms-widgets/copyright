@@ -13,6 +13,7 @@ import com.huotu.hotcms.service.entity.support.WidgetIdentifier;
 import com.huotu.hotcms.widget.ComponentProperties;
 import com.huotu.hotcms.widget.Widget;
 import com.huotu.hotcms.widget.WidgetStyle;
+import com.huotu.hotcms.widget.entity.PageInfo;
 import me.jiangcai.lib.resource.service.ResourceService;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -157,15 +158,34 @@ public class WidgetInfo implements Widget {
             throw new IOException(e);
         }
         List<Map<String,Object>> pageLinks = new ArrayList<>();
-        Map<String,Object> map = new HashMap();
-        map.put("name","链接");
-        map.put("url","url");
-        pageLinks.add(map);
-        pageLinks.add(map);
-        pageLinks.add(map);
-        pageLinks.add(map);
-        pageLinks.add(map);
-        pageLinks.add(map);
+        PageInfo pageInfo1 = new PageInfo();
+        pageInfo1.setTitle("首页");
+        pageInfo1.setPagePath("");
+        pageInfo1.setPageId(1L);
+
+        PageInfo pageInfo2 = new PageInfo();
+        pageInfo2.setTitle("新闻");
+        pageInfo2.setPagePath("xw");
+        pageInfo2.setPageId(2L);
+
+
+        PageInfo pageInfo3 = new PageInfo();
+        pageInfo3.setTitle("关于我们");
+        pageInfo3.setPagePath("guwm");
+        pageInfo3.setPageId(3L);
+
+        List<PageInfo> pageInfos = new ArrayList<>();
+        pageInfos.add(pageInfo1);
+        pageInfos.add(pageInfo2);
+        pageInfos.add(pageInfo3);
+        for (PageInfo pageInfo : pageInfos) {
+            Map<String,Object> map = new HashMap<>();
+            map.put("name",pageInfo.getTitle());
+            map.put("pagePath",pageInfo.getPagePath());
+            map.put("id",pageInfo.getPageId());
+            map.put("pid",pageInfo.getParent() != null ? pageInfo.getParent().getPageId() : 0);
+            pageLinks.add(map);
+        }
         properties.put(VALID_COPY_PAGElINKS,pageLinks);
         return properties;
     }

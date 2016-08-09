@@ -30,6 +30,7 @@ CMSWidgets.initWidget({
             return me.properties;
         },
         uploadImage: function () {
+            var that = this;
             uploadForm({
                 ui: '#copyrightImage',
                 inputName: 'file',
@@ -38,10 +39,10 @@ CMSWidgets.initWidget({
                 maxFileCount: 1,
                 isCongruent: false,
                 successCallback: function (files, data, xhr, pd) {
-                    editor.properties.QRcodeUri = data.fileUri;
+                    that.properties.QRcodeUri = data.fileUri;
                 },
                 deleteCallback: function (resp, data, jqXHR) {
-                    editor.properties.QRcodeUri = "";
+                    that.properties.QRcodeUri = "";
                 }
             });
         },
@@ -53,6 +54,40 @@ CMSWidgets.initWidget({
             this.properties.copyrightContent = "";
             this.properties.pageLinkList = [];
             this.properties.QRcodeUri = "";
+            var that = this;
+            var setting = {
+                check: {
+                    enable: true
+                },
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                },
+                callback:{
+                    onCheck:onCheck
+                }
+            };
+            function onCheck(e,treeId,treeNode){
+                that.properties.pageLinkList=[];
+                var treeObj=$.fn.zTree.getZTreeObj("treeView");
+                var nodes=treeObj.getCheckedNodes(true);
+                for(var i=0;i<nodes.length;i++){
+                    var item = {
+                        id: nodes[i].id,
+                        pid: nodes[i].pid,
+                        name: nodes[i].name,
+                        pagePath: nodes[i].pagePath
+                    }
+                    that.properties.pageLinkList.push(item)
+                }
+            }
+
+            /*<![CDATA[*/
+            var zNodes = /*[[${@cmsDataSourceService.findSiteNotParentPage()}]]*/ '[]';
+            /*]]>*/
+            $.fn.zTree.init($("#treeView"), setting, jQuery.parseJSON(zNodes));
+
         },
         open: function (globalId) {
             this.properties = widgetProperties(globalId);
