@@ -30,7 +30,7 @@ CMSWidgets.initWidget({
             return me.properties;
         },
         uploadImage: function () {
-            var that = this;
+            var me = this;
             uploadForm({
                 ui: '#copyrightImage',
                 inputName: 'file',
@@ -39,10 +39,10 @@ CMSWidgets.initWidget({
                 maxFileCount: 1,
                 isCongruent: false,
                 successCallback: function (files, data, xhr, pd) {
-                    that.properties.QRcodeUri = data.fileUri;
+                    me.properties.QRcodeUri = data.fileUri;
                 },
                 deleteCallback: function (resp, data, jqXHR) {
-                    that.properties.QRcodeUri = "";
+                    me.properties.QRcodeUri = "";
                 }
             });
         },
@@ -78,7 +78,7 @@ CMSWidgets.initWidget({
                         pid: nodes[i].pid,
                         name: nodes[i].name,
                         pagePath: nodes[i].pagePath
-                    }
+                    };
                     that.properties.pageLinkList.push(item)
                 }
             }
@@ -95,7 +95,7 @@ CMSWidgets.initWidget({
             this.uploadImage();
         },
         close: function (globalId) {
-
+            $('#copyrightImage').siblings().remove();
         }
     }
-})
+});
