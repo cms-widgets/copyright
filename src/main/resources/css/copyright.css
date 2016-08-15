@@ -1,6 +1,6 @@
 /*[[${'#'+componentId}]]*/.copyright{
-    background: /*[[${properties['copyBColor']}]]*/ #fff;
+    background: /*[[${copyBColor}]]*/ #fff;
 }
 /*[[${'#'+componentId}]]*/.copyright a, /*[[${'#'+componentId}]]*/.copyright p {
-   color:/*[[${properties['copyTColor']}]]*/ #444;
+   color:/*[[${copyTColor}]]*/ #444;
 }

@@ -109,19 +109,7 @@ public class WidgetInfo implements Widget {
     @Scheduled
     @Override
     public void valid(String styleId, ComponentProperties componentProperties) throws IllegalArgumentException {
-        WidgetStyle[] widgetStyles = styles();
-        boolean flag = false;
-        if (widgetStyles == null || widgetStyles.length < 1) {
-            throw new IllegalArgumentException();
-        }
-        for (WidgetStyle ws : widgetStyles) {
-            if ((flag = ws.id().equals(styleId))) {
-                break;
-            }
-        }
-        if (!flag) {
-            throw new IllegalArgumentException();
-        }
+        WidgetStyle style = WidgetStyle.styleByID(this,styleId);
         //加入控件独有的属性验证
         String copyPTop = (String) componentProperties.get(VALID_COPY_ADDRESS);
         String copyPBottom = (String) componentProperties.get(VALID_COPY_INFORMATION);
@@ -146,8 +134,8 @@ public class WidgetInfo implements Widget {
     public ComponentProperties defaultProperties(ResourceService resourceService) throws IOException {
         ComponentProperties properties = new ComponentProperties();
         WidgetIdentifier identifier = new WidgetIdentifier(groupId(), widgetId(), version());
-        properties.put(VALID_COPY_ADDRESS, "400-1818-357 加盟热线：400-1008-013");
-        properties.put(VALID_COPY_INFORMATION, "杭州市滨江区阡陌路482号智慧e谷B幢4楼");
+        properties.put(VALID_COPY_INFORMATION, "400-1818-357 加盟热线：400-1008-013");
+        properties.put(VALID_COPY_ADDRESS, "杭州市滨江区阡陌路482号智慧e谷B幢4楼");
         properties.put(VALID_COPY_BCOLOR, "#fff");
         properties.put(VALID_COPY_TCOLOR, "#000000");
         properties.put(VALID_COPY_CONTENT, "Copyright&copy;2013-2016." + "杭州火图科技有限公司. 浙ICP备13027761号-5");

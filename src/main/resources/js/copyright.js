@@ -82,12 +82,10 @@ CMSWidgets.initWidget({
                     that.properties.pageLinkList.push(item)
                 }
             }
-
             /*<![CDATA[*/
             var zNodes = /*[[${@cmsDataSourceService.findSiteNotParentPage()}]]*/ '[]';
             /*]]>*/
             $.fn.zTree.init($("#treeView"), setting, jQuery.parseJSON(zNodes));
-
         },
         open: function (globalId) {
             this.properties = widgetProperties(globalId);
