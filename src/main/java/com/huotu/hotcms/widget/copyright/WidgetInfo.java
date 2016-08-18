@@ -40,6 +40,7 @@ public class WidgetInfo implements Widget {
     public static final String VALID_COPY_CONTENT = "copyrightContent";
     public static final String VALID_COPY_QRCODE_URI = "QRcodeUri";
     public static final String VALID_COPY_PAGElINKS = "pageLinkList";
+    public static final String VALID_COPY_LOGO_URI = "logoUri";
 
     /*
      * 指定风格的模板类型 如：html,text等
@@ -81,7 +82,7 @@ public class WidgetInfo implements Widget {
 
     @Override
     public WidgetStyle[] styles() {
-        return new WidgetStyle[]{new DefaultWidgetStyle()};
+        return new WidgetStyle[]{new DefaultWidgetStyle(),new SiFanWidgetStyle()};
     }
 
     @Override
@@ -142,6 +143,8 @@ public class WidgetInfo implements Widget {
         try {
             properties.put(VALID_COPY_QRCODE_URI, resourceService.getResource("widget/" + identifier.toURIEncoded()
                     + "/img/code.jpg").httpUrl().toURI().toString());
+            properties.put(VALID_COPY_LOGO_URI, resourceService.getResource("widget/" + identifier.toURIEncoded()
+                    + "/img/code.jpg").httpUrl().toURI().toString());
         } catch (URISyntaxException e) {
             throw new IOException(e);
         }
@@ -171,7 +174,6 @@ public class WidgetInfo implements Widget {
             map.put("name",pageInfo.getTitle());
             map.put("pagePath",pageInfo.getPagePath());
             map.put("id",pageInfo.getPageId());
-            map.put("pid",pageInfo.getParent() != null ? pageInfo.getParent().getPageId() : 0);
             pageLinks.add(map);
         }
         properties.put(VALID_COPY_PAGElINKS,pageLinks);

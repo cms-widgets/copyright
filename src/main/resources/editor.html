@@ -34,17 +34,53 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="col-sm-3 control-label">选择二维码</label>
+            <div class="col-sm-9 oneImage">
+                <div class="imageUpload" id="copyrightImage"></div>
+            </div>
+            <div class="col-sm-9 oneImage">
+                <img th:src="${QRcodeUri}" class="QRcodeUri"></img>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">选择logo</label>
+            <div class="col-sm-9 oneImage">
+                <div class="logoUpload" ></div>
+            </div>
+            <div class="col-sm-9 oneImage">
+                <img th:src="${logoUri}" class="logoUri"></img>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <input type="text" class="form-control" name="name" placeholder="链接名称"/>
+            </div>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" name="pagePath" placeholder="链接/或外链"/>
+            </div>
+            <div class="col-sm-2">
+                <button type="button" class="form-control saveNode">保存</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <button type="button" class="form-control addRootNodes" >一级节点</button>
+            </div>
+            <div class="col-sm-4">
+                <button type="button" class="form-control delNodes" >删除</button>
+            </div>
+            <div class="col-sm-4">
+                <button type="button" class="form-control reset" >重做</button>
+            </div>
+        </div>
+
+        <div class="form-group">
             <label class="col-sm-3 control-label">链接列表</label>
             <div class="col-sm-12 scrollDiv">
                 <ul id="treeView" class="ztree"></ul>
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label">选择二维码</label>
-            <div class="col-sm-9 oneImage">
-                <div class="imageUpload" id="copyrightImage"></div>
-            </div>
-        </div>
+
     </form>
 </div>
 
