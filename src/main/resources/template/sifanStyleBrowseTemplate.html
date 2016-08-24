@@ -1,4 +1,4 @@
-<div style="background-color:#1a1a1a; width:100%; " class="footsy">
+<div style="background-color:#1a1a1a; width:100%; " class="footsy" xmlns:res="http://resource.jiangcai.me">
     <div class="footsy">
         <ul class="list-unstyled">
             <li th:each="pageLink:${pageLinkList}">
@@ -8,13 +8,13 @@
         </ul>
         <div style=" float:right;width: 92px;margin-right: 10px;">
           <span>
-          <img src="http://placehold.it/100x100?text=二维码" alt="二维码" th:src="${QRcodeUri}" />
+            <img src="http://placehold.it/100x100?text=二维码" alt="二维码" th:src="${QRcode}" />
           </span>
         </div>
         <p style="clear:both"></p>
         <p style="border-bottom:1px solid #979797; width:1000px;;height:20px; margin-bottom:15px;">&nbsp;</p>
         <div style="width:420px; float:left;">
-            <p style=" font-size:12px; margin-top:10px;" th:text="${copyrightContent}" class=" copyright-content">
+            <p style=" font-size:12px; margin-top:10px;" th:text="${site.copyright}" class=" copyright-content">
                 Copyright © 2006 版权所有：上海国厚投资管理有限公司 皖ICP备xxxx号
             </p>
             <p style="font-size:12px;" th:text="${companyAddress}" class=" copyright-address" >
@@ -22,7 +22,7 @@
             </p>
         </div>
         <p style="margin:16px 0px; float:right;">
-            <img style="width:252px;" th:src="${logoUri}" src="http://placehold.it/100x100?text=LOGO" >
+            <a href=""><img style="width:252px;" res:src="${site.logoUri}" src="http://placehold.it/100x100?text=LOGO" ></a>
         </p>
         <p style="clear:both"></p>
     </div>

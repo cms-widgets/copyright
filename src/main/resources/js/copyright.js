@@ -10,11 +10,8 @@ CMSWidgets.initWidget({
             $.each($(".contactInformation"), function (i, obj) {
                 me.properties.contactInformation = $(obj).val();
             });
-            if(this.properties.QRcodeUri==undefined || this.properties.QRcodeUri=='') {
-                $.each($(".QRcodeUri"), function (i) {
-                    me.properties.QRcodeUri = $(this).attr("src")
-                })
-            }
+            me.properties.QRcode = $(".QRcode").attr("src")
+
             $.each($(".companyAddress"), function (i, obj) {
                 me.properties.companyAddress = $(obj).val();
             });
@@ -24,55 +21,22 @@ CMSWidgets.initWidget({
             $.each($(".copyTColor"), function (i, obj) {
                 me.properties.copyTColor = $(obj).val();
             });
-            $.each($(".copyrightContent"), function (i, obj) {
-                me.properties.copyrightContent = $(obj).val();
-            });
             var treeObj = $.fn.zTree.getZTreeObj("treeView");
             var nodes = treeObj.transformToArray(treeObj.getNodes());
             me.properties.pageLinkList=nodes;
-            if (me.properties.contactInformation=='' || me.properties.companyAddress=='' || me.properties.copyrightContent==''){
+            if (me.properties.contactInformation=='' || me.properties.companyAddress==''){
                 onFailed("控件缺乏参数，请填写参数");
                 return;
             }
             onSuccess(me.properties);
             return me.properties;
         },
-        uploadImage: function () {
-            var me = this;
-            uploadForm({
-                ui: '#copyrightImage',
-                inputName: 'file',
-                maxWidth: 200,
-                maxHeight: 200,
-                maxFileCount: 1,
-                isCongruent: false,
-                successCallback: function (files, data, xhr, pd) {
-                    console.error("success = data:"+data+"  \n files:"+files)
-                    me.properties.QRcodeUri = data.fileUri;
-                },
-                deleteCallback: function (resp, data, jqXHR) {
-                    console.error("delete = data:"+data);
-                    me.properties.QRcodeUri = "";
-                }
-            });
-            uploadForm({
-                ui: '.logoUpload',
-                inputName: 'file',
-                maxWidth: 200,
-                maxHeight: 200,
-                maxFileCount: 1,
-                isCongruent: false,
-                successCallback: function (files, data, xhr, pd) {
-                    console.error("success = data:"+data+"  \n files:"+files)
-                    me.properties.logoUri = data.fileUri;
-                },
-                deleteCallback: function (resp, data, jqXHR) {
-                    console.error("delete = data:"+data);
-                    me.properties.logoUri = "";
-                }
-            });
-        },
         initProperties: function () {
+            $('.js-addEditBtn').addEdit({
+                amount: 1,
+                hasImage: true,
+                imageClass: 'QRcode'
+            });
             var treeNode = null;
             var setting = {
                 data: {
@@ -84,7 +48,6 @@ CMSWidgets.initWidget({
                     onClick: onClick
                 }
             };
-
             function onClick(event, treeId, treenode) {
                 treeNode = treenode;
                 $("input[name='name'] ").val(treenode.name);
@@ -117,16 +80,13 @@ CMSWidgets.initWidget({
                 treeNode.pagePath = $("input[name='pagePath'] ").val();
                 $.fn.zTree.getZTreeObj("treeView").updateNode(treeNode);
             });
-
         },
         open: function (globalId) {
             this.properties = widgetProperties(globalId);
             this.initProperties();
-            this.uploadImage();
+
         },
         close: function (globalId) {
-            $('#copyrightImage').siblings().remove();
-            $('.logoUpload').siblings().remove();
             $(".form-horizontal").off("click", ".addRootNodes");
             $(".form-horizontal").off("click", ".saveNode");
             $(".form-horizontal").off("click", ".reset");

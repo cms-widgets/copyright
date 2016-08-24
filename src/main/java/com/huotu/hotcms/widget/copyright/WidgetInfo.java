@@ -37,10 +37,8 @@ public class WidgetInfo implements Widget {
     public static final String VALID_COPY_INFORMATION = "contactInformation";
     public static final String VALID_COPY_BCOLOR = "copyBColor";
     public static final String VALID_COPY_TCOLOR = "copyTColor";
-    public static final String VALID_COPY_CONTENT = "copyrightContent";
-    public static final String VALID_COPY_QRCODE_URI = "QRcodeUri";
     public static final String VALID_COPY_PAGElINKS = "pageLinkList";
-    public static final String VALID_COPY_LOGO_URI = "logoUri";
+    public static final String VALID_COPY_QRCODE = "QRcode";
 
     /*
      * 指定风格的模板类型 如：html,text等
@@ -116,11 +114,10 @@ public class WidgetInfo implements Widget {
         String copyPBottom = (String) componentProperties.get(VALID_COPY_INFORMATION);
         String copyBColor = (String) componentProperties.get(VALID_COPY_BCOLOR);
         String copyTColor = (String) componentProperties.get(VALID_COPY_TCOLOR);
-        String copyContent = (String) componentProperties.get(VALID_COPY_CONTENT);
         List<Map> pageLinks = (List<Map>) componentProperties.get(VALID_COPY_PAGElINKS);
         if (copyPTop == null || copyPBottom == null || copyBColor == null || copyTColor == null
-               || pageLinks==null || copyContent == null || copyPTop.equals("") || copyPBottom.equals("")
-                || copyBColor.equals("") || copyTColor.equals("") || copyContent.equals("") ||pageLinks.size()==0) {
+               || pageLinks==null ||  copyPTop.equals("") || copyPBottom.equals("")
+                || copyBColor.equals("") || copyTColor.equals("") || pageLinks.size()==0) {
             throw new IllegalArgumentException("控件属性缺少");
         }
 
@@ -134,20 +131,16 @@ public class WidgetInfo implements Widget {
     @Override
     public ComponentProperties defaultProperties(ResourceService resourceService) throws IOException {
         ComponentProperties properties = new ComponentProperties();
-        WidgetIdentifier identifier = new WidgetIdentifier(groupId(), widgetId(), version());
         properties.put(VALID_COPY_INFORMATION, "400-1818-357 加盟热线：400-1008-013");
         properties.put(VALID_COPY_ADDRESS, "杭州市滨江区阡陌路482号智慧e谷B幢4楼");
         properties.put(VALID_COPY_BCOLOR, "#fff");
-        properties.put(VALID_COPY_TCOLOR, "#000000");
-        properties.put(VALID_COPY_CONTENT, "Copyright&copy;2013-2016." + "杭州火图科技有限公司. 浙ICP备13027761号-5");
+        WidgetIdentifier identifier = new WidgetIdentifier(groupId(), widgetId(), version());
         try {
-            properties.put(VALID_COPY_QRCODE_URI, resourceService.getResource("widget/" + identifier.toURIEncoded()
-                    + "/img/code.jpg").httpUrl().toURI().toString());
-            properties.put(VALID_COPY_LOGO_URI, resourceService.getResource("widget/" + identifier.toURIEncoded()
-                    + "/img/code.jpg").httpUrl().toURI().toString());
+            properties.put(VALID_COPY_QRCODE, resourceService.getResource("widget/" + identifier.toURIEncoded()
+                    + "/" + "img/code.png").httpUrl().toURI().toString());
         } catch (URISyntaxException e) {
-            throw new IOException(e);
         }
+        properties.put(VALID_COPY_TCOLOR, "#000000");
         List<Map<String,Object>> pageLinks = new ArrayList<>();
         PageInfo pageInfo1 = new PageInfo();
         pageInfo1.setTitle("首页");

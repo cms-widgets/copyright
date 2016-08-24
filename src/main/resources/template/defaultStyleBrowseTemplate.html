@@ -1,5 +1,5 @@
 <!--预览视图-->
-<div class="copyright row">
+<div class="copyright row" xmlns:res="http://resource.jiangcai.me">
     <div class="col-sm-8 col-lg-10">
         <ul class="list-unstyled">
             <li th:each="pageLink:${pageLinkList}">
@@ -13,13 +13,13 @@
         <p th:text="${companyAddress}" class="copyright-address">
             公司地址
         </p>
-        <p th:text="${copyrightContent}" class="copyright-content">
+        <p th:text="${site.copyright}" class="copyright-content">
             Copyright©2013-2016
         </p>
     </div>
     <div class="col-sm-4 col-lg-2 hidden-xs">
-        <img class="img-responsive qrcode" th:src="${QRcodeUri}" src="http://placehold.it/100x100?text=二维码"
-             alt="二维码">
+        <a href=""><img class="img-responsive qrcode" res:src="${site.logoUri}" src="http://placehold.it/100x100?text=logo"/>
+        </a>
     </div>
 </div>
 <!--/预览视图-->
