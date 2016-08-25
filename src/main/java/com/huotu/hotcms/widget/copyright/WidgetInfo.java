@@ -145,18 +145,18 @@ public class WidgetInfo implements Widget {
         PageInfo pageInfo1 = new PageInfo();
         pageInfo1.setTitle("首页");
         pageInfo1.setPagePath("");
-        pageInfo1.setPageId(1L);
+//        pageInfo1.setPageId(1L);
 
         PageInfo pageInfo2 = new PageInfo();
         pageInfo2.setTitle("新闻");
         pageInfo2.setPagePath("xw");
-        pageInfo2.setPageId(2L);
+//        pageInfo2.setPageId(2L);
 
 
         PageInfo pageInfo3 = new PageInfo();
         pageInfo3.setTitle("关于我们");
         pageInfo3.setPagePath("guwm");
-        pageInfo3.setPageId(3L);
+//        pageInfo3.setPageId(3L);
 
         List<PageInfo> pageInfos = new ArrayList<>();
         pageInfos.add(pageInfo1);
@@ -166,7 +166,7 @@ public class WidgetInfo implements Widget {
             Map<String,Object> map = new HashMap<>();
             map.put("name",pageInfo.getTitle());
             map.put("pagePath",pageInfo.getPagePath());
-            map.put("id",pageInfo.getPageId());
+//            map.put("id",pageInfo.getPageId());
             pageLinks.add(map);
         }
         properties.put(VALID_COPY_PAGElINKS,pageLinks);
