@@ -1,9 +1,14 @@
 <!--预览视图-->
-<div class="copyright row" xmlns:res="http://resource.jiangcai.me">
+<div class="copyright row" xmlns:res="http://resource.jiangcai.me" xmlns:th="http://www.thymeleaf.org">
+
+
     <div class="col-sm-8 col-lg-10">
         <ul class="list-unstyled">
             <li th:each="pageLink:${pageLinkList}">
-                <a th:href="@{/_web/}+${pageLink['pagePath']}" href="index.html"
+                <a th:if="${pageLink['flag']==0}" th:href="${pageLink['linkPath']}" href="index.html"
+                   th:text="${pageLink['name']}">首页</a>
+
+                <a th:if="${pageLink['flag']==1}" th:href="@{/_web/{path}(path=${@cmsDataSourceService.findPageInfoContent(pageLink['linkPath']).pagePath})}" href="index.html"
                    th:text="${pageLink['name']}">首页</a>
             </li>
         </ul>

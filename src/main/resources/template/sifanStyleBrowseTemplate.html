@@ -1,14 +1,20 @@
-<div style="background-color:#1a1a1a; width:100%; " class="footsy" xmlns:res="http://resource.jiangcai.me">
+<div style="background-color:#1a1a1a; width:100%; " class="footsy" xmlns:res="http://resource.jiangcai.me"
+     xmlns:th="http://www.thymeleaf.org">
     <div class="footsy">
         <ul class="list-unstyled">
             <li th:each="pageLink:${pageLinkList}">
-                <a th:href="@{/_web/}+${pageLink['pagePath']}" href="index.html"
+                <a th:if="${pageLink['flag']==0}" th:href="${pageLink['linkPath']}" href="index.html"
+                   th:text="${pageLink['name']}">首页</a>
+
+                <a th:if="${pageLink['flag']==1}"
+                   th:href="@{/_web/{pagePath}(pagePath=${@cmsDataSourceService.findPageInfoContent(pageLink['linkPath']).pagePath})}"
+                   href="index.html"
                    th:text="${pageLink['name']}">首页</a>
             </li>
         </ul>
         <div style=" float:right;width: 92px;margin-right: 10px;">
           <span>
-            <img src="http://placehold.it/100x100?text=二维码" alt="二维码" th:src="${QRcode}" />
+            <img src="http://placehold.it/100x100?text=二维码" alt="二维码" th:src="${QRcode}"/>
           </span>
         </div>
         <p style="clear:both"></p>
@@ -17,12 +23,12 @@
             <p style=" font-size:12px; margin-top:10px;" th:text="${site.copyright}" class=" copyright-content">
                 Copyright © 2006 版权所有：上海国厚投资管理有限公司 皖ICP备xxxx号
             </p>
-            <p style="font-size:12px;" th:text="${companyAddress}" class=" copyright-address" >
+            <p style="font-size:12px;" th:text="${companyAddress}" class=" copyright-address">
                 地址：上海市普陀区岚皋路567号B座505-506室
             </p>
         </div>
         <p style="margin:16px 0px; float:right;">
-            <a href=""><img style="width:252px;" res:src="${site.logoUri}" src="http://placehold.it/100x100?text=LOGO" ></a>
+            <a href=""><img style="width:252px;" res:src="${site.logoUri}" src="http://placehold.it/100x100?text=LOGO"></a>
         </p>
         <p style="clear:both"></p>
     </div>
