@@ -144,17 +144,20 @@ public class WidgetInfo implements Widget {
         PageInfo pageInfo1 = new PageInfo();
         pageInfo1.setTitle("首页");
         pageInfo1.setPagePath("");
+//        pageInfo1.setPageId(1L);
         pageInfo1.setId(1L);
 
         PageInfo pageInfo2 = new PageInfo();
         pageInfo2.setTitle("新闻");
         pageInfo2.setPagePath("xw");
+//        pageInfo2.setPageId(2L);
         pageInfo2.setId(2L);
 
 
         PageInfo pageInfo3 = new PageInfo();
         pageInfo3.setTitle("关于我们");
         pageInfo3.setPagePath("guwm");
+//        pageInfo3.setPageId(3L);
         pageInfo3.setId(3L);
 
         List<PageInfo> pageInfos = new ArrayList<>();
