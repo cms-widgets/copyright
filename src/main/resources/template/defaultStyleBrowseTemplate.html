@@ -1,29 +1,35 @@
 <!--预览视图-->
-<div class="copyright row" xmlns:res="http://resource.jiangcai.me" xmlns:th="http://www.thymeleaf.org">
-    <div class="col-sm-8 col-lg-10">
-        <ul class="list-unstyled">
-            <li th:each="pageLink:${pageLinkList}">
-                <a th:if="${pageLink['flag']==0}" th:href="${pageLink['linkPath']}" href="index.html"
-                   th:text="${pageLink['name']}">首页</a>
+<div class="copyright" xmlns:res="http://resource.jiangcai.me" xmlns:th="http://www.thymeleaf.org">
 
-                <a th:if="${pageLink['flag']==1}" th:href="@{/_web/{path}(path=${@cmsDataSourceService.findPageInfoContent(pageLink['linkPath'])
-                !=null ?@cmsDataSourceService.findPageInfoContent(pageLink['linkPath']).pagePath:''})}" href="index.html"
-                   th:text="${pageLink['name']}">首页</a>
-            </li>
-        </ul>
-        <p th:text="${contactInformation}" class="copyright-contact">
-            业务热线
-        </p>
-        <p th:text="${companyAddress}" class="copyright-address">
-            公司地址
-        </p>
-        <p th:text="${site.copyright}" class="copyright-content">
-            Copyright©2013-2016
-        </p>
-    </div>
-    <div class="col-sm-4 col-lg-2 hidden-xs">
-        <a href=""><img class="img-responsive center-block qrcode" res:src="${site.logoUri}" src="http://placehold.it/100x100?text=logo"/>
-        </a>
+    <div class="row">
+
+        <div class="col-sm-8 col-lg-10">
+            <ul class="list-unstyled">
+                <li th:each="pageLink:${pageLinkList}">
+                    <a th:if="${pageLink['flag']==0}" th:href="${pageLink['linkPath']}" href="index.html"
+                       th:text="${pageLink['name']}">首页</a>
+
+                    <a th:if="${pageLink['flag']==1}"
+                       th:href="@{/_web/{path}(path=${@cmsDataSourceService.findPageInfoContent(pageLink['linkPath'])!=null ?@cmsDataSourceService.findPageInfoContent(pageLink['linkPath']).pagePath:''})}"
+                       href="index.html"
+                       th:text="${pageLink['name']}">首页</a>
+                </li>
+            </ul>
+            <p th:text="${contactInformation}" class="copyright-contact">
+                业务热线
+            </p>
+            <p th:text="${companyAddress}" class="copyright-address">
+                公司地址
+            </p>
+            <p th:text="${site.copyright}" class="copyright-content">
+                Copyright©2013-2016
+            </p>
+        </div>
+        <div class="col-sm-4 col-lg-2 hidden-xs">
+            <a href=""><img class="img-responsive center-block qrcode" res:src="${site.logoUri}"
+                            src="http://placehold.it/100x100?text=logo"/>
+            </a>
+        </div>
     </div>
 </div>
 <!--/预览视图-->
