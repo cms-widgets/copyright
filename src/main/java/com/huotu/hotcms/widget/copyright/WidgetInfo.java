@@ -40,11 +40,6 @@ public class WidgetInfo implements Widget {
     public static final String VALID_COPY_PAGElINKS = "pageLinkList";
     public static final String VALID_COPY_QRCODE = "QRcode";
 
-    /*
-     * 指定风格的模板类型 如：html,text等
-     */
-    public static final String VALID_STYLE_TEMPLATE = "styleTemplate";
-
     @Override
     public String groupId() {
         return "com.huotu.hotcms.widget.copyright";
@@ -112,12 +107,9 @@ public class WidgetInfo implements Widget {
         //加入控件独有的属性验证
         String copyPTop = (String) componentProperties.get(VALID_COPY_ADDRESS);
         String copyPBottom = (String) componentProperties.get(VALID_COPY_INFORMATION);
-        String copyBColor = (String) componentProperties.get(VALID_COPY_BCOLOR);
-        String copyTColor = (String) componentProperties.get(VALID_COPY_TCOLOR);
         List<Map> pageLinks = (List<Map>) componentProperties.get(VALID_COPY_PAGElINKS);
-        if (copyPTop == null || copyPBottom == null || copyBColor == null || copyTColor == null
-               || pageLinks==null ||  copyPTop.equals("") || copyPBottom.equals("")
-                || copyBColor.equals("") || copyTColor.equals("") || pageLinks.size()==0) {
+        if (copyPTop == null || copyPBottom == null ||  pageLinks==null ||  copyPTop.equals("")
+                || copyPBottom.equals("")) {
             throw new IllegalArgumentException("控件属性缺少");
         }
 
@@ -145,18 +137,18 @@ public class WidgetInfo implements Widget {
         PageInfo pageInfo1 = new PageInfo();
         pageInfo1.setTitle("首页");
         pageInfo1.setPagePath("");
-//        pageInfo1.setPageId(1L);
+        pageInfo1.setId(1L);
 
         PageInfo pageInfo2 = new PageInfo();
         pageInfo2.setTitle("新闻");
         pageInfo2.setPagePath("xw");
-//        pageInfo2.setPageId(2L);
+        pageInfo2.setId(2L);
 
 
         PageInfo pageInfo3 = new PageInfo();
         pageInfo3.setTitle("关于我们");
         pageInfo3.setPagePath("guwm");
-//        pageInfo3.setPageId(3L);
+        pageInfo3.setId(3L);
 
         List<PageInfo> pageInfos = new ArrayList<>();
         pageInfos.add(pageInfo1);
@@ -165,8 +157,9 @@ public class WidgetInfo implements Widget {
         for (PageInfo pageInfo : pageInfos) {
             Map<String,Object> map = new HashMap<>();
             map.put("name",pageInfo.getTitle());
-            map.put("pagePath",pageInfo.getPagePath());
-//            map.put("id",pageInfo.getPageId());
+            map.put("linkPath",pageInfo.getPagePath());
+            map.put("flag",0);
+            map.put("id",pageInfo.getId());
             pageLinks.add(map);
         }
         properties.put(VALID_COPY_PAGElINKS,pageLinks);
