@@ -6,7 +6,8 @@
                 <a th:if="${pageLink['flag']==0}" th:href="${pageLink['linkPath']}" href="index.html"
                    th:text="${pageLink['name']}">首页</a>
 
-                <a th:if="${pageLink['flag']==1}" th:href="@{/_web/{path}(path=${@cmsDataSourceService.findPageInfoContent(pageLink['linkPath'])!=null ?@cmsDataSourceService.findPageInfoContent(pageLink['linkPath']).pagePath:''})}" href="index.html"
+                <a th:if="${pageLink['flag']==1}" th:href="@{/_web/{path}(path=${@cmsDataSourceService.findPageInfoContent(pageLink['linkPath'])
+                !=null ?@cmsDataSourceService.findPageInfoContent(pageLink['linkPath']).pagePath:''})}" href="index.html"
                    th:text="${pageLink['name']}">首页</a>
             </li>
         </ul>
