@@ -40,12 +40,12 @@ CMSWidgets.initWidget({
                     linkPath: 'www'
                 }, {id: 3, name: '首页3', flag: 0, linkPath: 'www'}]
                 $('#treeView').addTreeView({
-                    debug: true,
+                    // debug: true,
                     treeNodes: node
                 });
             } else {
                 $('#treeView').addTreeView({
-                    debug: true,
+                    // debug: true,
                     treeNodes: that.properties.pageLinkList
                 });
             }
