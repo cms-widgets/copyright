@@ -1,5 +1,5 @@
 <!--预览视图-->
-<div class="copyright" xmlns:res="http://resource.jiangcai.me" xmlns:th="http://www.thymeleaf.org">
+<div class="copyright" th:id="${componentId}" xmlns:res="http://resource.jiangcai.me" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
 
@@ -10,7 +10,8 @@
                        th:text="${pageLink['name']}">首页</a>
 
                     <a th:if="${pageLink['flag']==1}"
-                       th:href="@{/_web/{path}(path=${@cmsDataSourceService.findPageInfoContent(pageLink['linkPath'])!=null ?@cmsDataSourceService.findPageInfoContent(pageLink['linkPath']).pagePath:''})}"
+                       th:href="@{/_web/{path}(path=${@cmsDataSourceService.findPageInfoContent(pageLink['linkPath'])!=null
+                       ?@cmsDataSourceService.findPageInfoContent(pageLink['linkPath']).pagePath:''})}"
                        href="index.html"
                        th:text="${pageLink['name']}">首页</a>
                 </li>
