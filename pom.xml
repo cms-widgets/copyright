@@ -17,6 +17,10 @@
     <packaging>jar</packaging>
 
     <name>copyright</name>
+    <description>
+        底部版权信息控件，可以上传企业二维码图片，可以添加多个链接，链接可以选择系统的页面，也可以添加外链，支持一级菜单显示。
+    </description>
+
     <url>https://github.com/huotuinc/CMS</url>
     <organization>
         <name>Hangzhou Hot Technology Co., Ltd.</name>
