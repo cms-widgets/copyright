@@ -1,6 +1,6 @@
 <div class="borderBoxs">
     <form class="form-horizontal">
-        <div class="form-group">
+        <div class="form-group clearfix">
             <label class="col-sm-3 control-label">背景颜色</label>
             <div class="col-sm-3">
                 <input type="text" name="copyBColor" th:value="${copyBColor}"
@@ -12,39 +12,30 @@
                        class="form-control color-picker copyTColor">
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group clearfix">
             <label class="col-sm-3 control-label">联系方式设置</label>
             <div class="col-sm-9">
                 <input type="text" name="contactInformation" th:value="${contactInformation}"
                        class="form-control contactInformation" data-type="title"/>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group clearfix">
             <label class="col-sm-3 control-label">公司地址设置</label>
             <div class="col-sm-9">
                 <input type="text" name="companyAddress" th:value="${companyAddress}"
                        class="form-control companyAddress" data-type="title"/>
             </div>
         </div>
-        <div class="form-group">
-            <div class="addEditBox row">
-                <div class="col-xs-3 mb10 ">
-                    <img class="img-responsive img-thumbnail center-block js-image QRcode"
-                         src="http://placehold.it/80x80?text=二维码"
-                         th:src="${QRcode}"/>
-                </div>
-                <div class="btn-group btn-group-xs" role="group">
-                    <div class="btn btn-default js-move-edit" title="移动"><b class="fa fa-arrows" aria-hidden="true"></b>
-                    </div>
-                    <button type="button" class="btn btn-default js-delete-edit" title="删除">
-                        <b class="fa fa-trash-o" aria-hidden="true"></b>
-                    </button>
-                </div>
+        <div class="addEditBox row">
+            <div class="col-xs-3 mb10 ">
+                <img class="img-responsive img-thumbnail center-block js-image QRcode"
+                     src="http://placehold.it/80x80?text=二维码"
+                     th:src="${QRcode}"/>
             </div>
-            <button class="js-addEditBtn btn btn-default" type="button">
-                <i class="fa fa-plus-circle"  aria-hidden="true"></i>添加数据
-            </button>
         </div>
+        <button class="js-addEditBtn btn btn-default" type="button">
+            <i class="fa fa-plus-circle"  aria-hidden="true"></i>添加数据
+        </button>
         <div>
             <div id="treeView"></div>
         </div>
