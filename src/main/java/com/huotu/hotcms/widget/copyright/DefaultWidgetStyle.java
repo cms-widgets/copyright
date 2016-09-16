@@ -9,13 +9,10 @@
 
 package com.huotu.hotcms.widget.copyright;
 
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import java.util.Locale;
-import com.huotu.hotcms.widget.Widget;
 import com.huotu.hotcms.widget.WidgetStyle;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+
 import java.util.Locale;
 
 /**
@@ -30,15 +27,15 @@ public class DefaultWidgetStyle implements WidgetStyle{
 
     @Override
     public String name() {
-        return "bootstrap 风格版权信息";
+        return "默认";
     }
 
     @Override
     public String name(Locale locale) {
-        if (locale.equals(Locale.CHINESE)) {
+        if (locale.equals(Locale.CHINA)) {
             return name();
         }
-        return "bootstrap style copyright";
+        return "default";
     }
 
     @Override
@@ -48,7 +45,7 @@ public class DefaultWidgetStyle implements WidgetStyle{
 
     @Override
     public String description(Locale locale) {
-        if (locale.equals(Locale.CHINESE)) {
+        if (locale.equals(Locale.CHINA)) {
             return "基于bootstrap样式的  ";
         }
         return "Based on the bootstrap style by copyright";

@@ -18,15 +18,15 @@ public class SiFanWidgetStyle implements WidgetStyle {
 
     @Override
     public String name() {
-        return "bootstrap 风格版权信息";
+        return "SiFan样式";
     }
 
     @Override
     public String name(Locale locale) {
-        if (locale.equals(Locale.CHINESE)) {
+        if (locale.equals(Locale.CHINA)) {
             return name();
         }
-        return "bootstrap style copyright";
+        return "SiFan style";
     }
 
     @Override
@@ -36,15 +36,15 @@ public class SiFanWidgetStyle implements WidgetStyle {
 
     @Override
     public String description(Locale locale) {
-        if (locale.equals(Locale.CHINESE)) {
-            return "基于bootstrap样式的  ";
+        if (locale.equals(Locale.CHINA)) {
+            return "基于bootstrap样式的 ";
         }
         return "Based on the bootstrap style by copyright";
     }
 
     @Override
     public Resource thumbnail() {
-        return new ClassPathResource("thumbnail/defaultStyleThumbnail.png", getClass().getClassLoader());
+        return new ClassPathResource("thumbnail/sifanCopyright.png", getClass().getClassLoader());
     }
 
     @Override
