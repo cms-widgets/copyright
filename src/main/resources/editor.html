@@ -26,19 +26,32 @@
                        class="form-control companyAddress" data-type="title"/>
             </div>
         </div>
-        <div class="addEditBox row">
-            <div class="col-xs-3 mb10 ">
-                <img class="img-responsive img-thumbnail center-block js-image QRcode"
-                     src="http://placehold.it/80x80?text=二维码"
-                     th:src="${QRcode}"/>
+        <div class="form-group clearfix">
+            <label class="col-sm-3 control-label">二维码：</label>
+            <div class="col-sm-9">
+                <span data-name="QRcodeSerial" class="gallery-content"></span>
+                <div data-name="QRcodeSerial" class="gallery-item-area">
+                    <!--img item-->
+                    <img src="!{url}" title="是!{title}么?"/>
+                </div>
             </div>
         </div>
-        <button class="js-addEditBtn btn btn-default" type="button">
-            <i class="fa fa-plus-circle"  aria-hidden="true"></i>添加数据
-        </button>
+        <div class="form-group clearfix">
+            <label class="col-sm-3 control-label">图片：</label>
+            <div class="col-sm-9">
+                <span data-name="picImgSerial" class="gallery-content"></span>
+                <div data-name="picImgSerial" class="gallery-item-area">
+                    <!--img item-->
+                    <img src="!{url}" title="是!{title}么?"/>
+                </div>
+            </div>
+        </div>
+
         <div>
             <div id="treeView"></div>
         </div>
+
+
     </form>
 </div>
 

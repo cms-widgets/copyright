@@ -9,11 +9,24 @@
 
 package com.huotu.hotcms.widget.copyright;
 
-import com.huotu.hotcms.service.entity.support.WidgetIdentifier;
+import com.huotu.hotcms.service.common.ContentType;
+import com.huotu.hotcms.service.entity.Category;
+import com.huotu.hotcms.service.entity.Gallery;
+import com.huotu.hotcms.service.entity.GalleryItem;
+import com.huotu.hotcms.service.model.GalleryItemModel;
+import com.huotu.hotcms.service.repository.CategoryRepository;
+import com.huotu.hotcms.service.repository.GalleryRepository;
+import com.huotu.hotcms.service.service.CategoryService;
+import com.huotu.hotcms.service.service.ContentService;
+import com.huotu.hotcms.service.service.GalleryItemService;
+import com.huotu.hotcms.service.service.GalleryService;
+import com.huotu.hotcms.widget.CMSContext;
 import com.huotu.hotcms.widget.ComponentProperties;
+import com.huotu.hotcms.widget.PreProcessWidget;
 import com.huotu.hotcms.widget.Widget;
 import com.huotu.hotcms.widget.WidgetStyle;
 import com.huotu.hotcms.widget.entity.PageInfo;
+import com.huotu.hotcms.widget.service.CMSDataSourceService;
 import me.jiangcai.lib.resource.service.ResourceService;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -21,24 +34,28 @@ import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 
 /**
  * @author CJ
  */
-public class WidgetInfo implements Widget {
+public class WidgetInfo implements Widget, PreProcessWidget {
     public static final String VALID_COPY_ADDRESS = "companyAddress";
     public static final String VALID_COPY_INFORMATION = "contactInformation";
     public static final String VALID_COPY_BCOLOR = "copyBColor";
     public static final String VALID_COPY_TCOLOR = "copyTColor";
     public static final String VALID_COPY_PAGElINKS = "pageLinkList";
-    public static final String VALID_COPY_QRCODE = "QRcode";
+    public static final String VALID_COPY_QRCODE = "QRcodeSerial";
+    public static final String VALID_COPY_PICIMG = "picImgSerial";
+    public static final String VALID_COPY_QRCODE_ITEMS = "QRCodeItems";
+    public static final String VALID_COPY_PICIMG_ITEMS = "picImgItems";
 
     @Override
     public String groupId() {
@@ -75,7 +92,7 @@ public class WidgetInfo implements Widget {
 
     @Override
     public WidgetStyle[] styles() {
-        return new WidgetStyle[]{new DefaultWidgetStyle(),new SiFanWidgetStyle()};
+        return new WidgetStyle[]{new DefaultWidgetStyle(), new SiFanWidgetStyle()};
     }
 
     @Override
@@ -86,6 +103,7 @@ public class WidgetInfo implements Widget {
         map.put("thumbnail/sifanCopyright.png", new ClassPathResource("thumbnail/sifanCopyright.png"
                 , getClass().getClassLoader()));
         map.put("img/code.jpg", new ClassPathResource("img/code.jpg", getClass().getClassLoader()));
+        map.put("img/picImg.png", new ClassPathResource("img/picImg.png", getClass().getClassLoader()));
         map.put("js/copyright.js", new ClassPathResource("js/copyright.js", getClass().getClassLoader()));
         return map;
     }
@@ -105,12 +123,19 @@ public class WidgetInfo implements Widget {
     @Scheduled
     @Override
     public void valid(String styleId, ComponentProperties componentProperties) throws IllegalArgumentException {
-        WidgetStyle style = WidgetStyle.styleByID(this,styleId);
+        WidgetStyle style = WidgetStyle.styleByID(this, styleId);
+        if (style.id().equals("siFanCopyrightStyle")) {
+            String qrcode = (String) componentProperties.get(VALID_COPY_QRCODE);
+            String picImg = (String) componentProperties.get(VALID_COPY_PICIMG);
+            if (qrcode == null || picImg == null) {
+                throw new IllegalArgumentException("控件属性缺少,没二维码和图片");
+            }
+        }
         //加入控件独有的属性验证
         String copyPTop = (String) componentProperties.get(VALID_COPY_ADDRESS);
         String copyPBottom = (String) componentProperties.get(VALID_COPY_INFORMATION);
         List<Map> pageLinks = (List<Map>) componentProperties.get(VALID_COPY_PAGElINKS);
-        if (copyPTop == null || copyPBottom == null ||  pageLinks==null ||  copyPTop.equals("")
+        if (copyPTop == null || copyPBottom == null || pageLinks == null || copyPTop.equals("")
                 || copyPBottom.equals("")) {
             throw new IllegalArgumentException("控件属性缺少");
         }
@@ -128,14 +153,21 @@ public class WidgetInfo implements Widget {
         properties.put(VALID_COPY_INFORMATION, "400-1818-357 加盟热线：400-1008-013");
         properties.put(VALID_COPY_ADDRESS, "杭州市滨江区阡陌路482号智慧e谷B幢4楼");
         properties.put(VALID_COPY_BCOLOR, "#fff");
-        WidgetIdentifier identifier = new WidgetIdentifier(groupId(), widgetId(), version());
-        try {
-            properties.put(VALID_COPY_QRCODE, resourceService.getResource("widget/" + identifier.toURIEncoded()
-                    + "/" + "img/code.png").httpUrl().toURI().toString());
-        } catch (URISyntaxException e) {
+        // 随意找一个数据源,如果没有。那就没有。。
+        GalleryRepository galleryRepository = CMSContext.RequestContext().getWebApplicationContext()
+                .getBean(GalleryRepository.class);
+        List<Gallery> galleryList = galleryRepository.findByCategory_Site(CMSContext.RequestContext().getSite());
+        if (galleryList.isEmpty()) {
+            Gallery gallery = initGallery(initCategory());
+            initGalleryItem(gallery, resourceService);
+            properties.put(VALID_COPY_QRCODE, gallery.getSerial());
+            properties.put(VALID_COPY_PICIMG, gallery.getSerial());
+        } else {
+            properties.put(VALID_COPY_QRCODE, galleryList.get(0).getSerial());
+            properties.put(VALID_COPY_PICIMG, galleryList.get(0).getSerial());
         }
         properties.put(VALID_COPY_TCOLOR, "#000000");
-        List<Map<String,Object>> pageLinks = new ArrayList<>();
+        List<Map<String, Object>> pageLinks = new ArrayList<>();
         PageInfo pageInfo1 = new PageInfo();
         pageInfo1.setTitle("首页");
         pageInfo1.setPagePath("");
@@ -157,15 +189,103 @@ public class WidgetInfo implements Widget {
         pageInfos.add(pageInfo2);
         pageInfos.add(pageInfo3);
         for (PageInfo pageInfo : pageInfos) {
-            Map<String,Object> map = new HashMap<>();
-            map.put("name",pageInfo.getTitle());
-            map.put("linkPath",pageInfo.getPagePath());
-            map.put("flag",0);
-            map.put("id",pageInfo.getId());
+            Map<String, Object> map = new HashMap<>();
+            map.put("name", pageInfo.getTitle());
+            map.put("linkPath", pageInfo.getPagePath());
+            map.put("flag", 0);
+            map.put("id", pageInfo.getId());
             pageLinks.add(map);
         }
-        properties.put(VALID_COPY_PAGElINKS,pageLinks);
+        properties.put(VALID_COPY_PAGElINKS, pageLinks);
         return properties;
     }
+
+
+    @Override
+    public void prepareContext(WidgetStyle style, ComponentProperties properties, Map<String, Object> variables, Map<String, String> parameters) {
+        String qrCodeSerial = (String) properties.get(VALID_COPY_QRCODE);
+        String picImgSerial = (String) properties.get(VALID_COPY_PICIMG);
+        CMSDataSourceService cmsDataSourceService = CMSContext.RequestContext().getWebApplicationContext()
+                .getBean(CMSDataSourceService.class);
+        List<GalleryItemModel> qrCode = cmsDataSourceService.findGalleryItems(qrCodeSerial, 1);
+        List<GalleryItemModel> picImg = cmsDataSourceService.findGalleryItems(picImgSerial, 1);
+        variables.put(VALID_COPY_QRCODE_ITEMS, qrCode);
+        variables.put(VALID_COPY_PICIMG_ITEMS, picImg);
+    }
+
+
+    /**
+     * 从CMSContext中获取CMSService的实现
+     *
+     * @param cmsService 需要返回的service接口
+     * @param <T>        返回的service实现
+     * @return
+     */
+    private <T> T getCMSServiceFromCMSContext(Class<T> cmsService) {
+        return CMSContext.RequestContext().
+                getWebApplicationContext().getBean(cmsService);
+    }
+
+    /**
+     * 初始化数据源
+     *
+     * @return
+     */
+    private Category initCategory() {
+        CategoryService categoryService = getCMSServiceFromCMSContext(CategoryService.class);
+        CategoryRepository categoryRepository = getCMSServiceFromCMSContext(CategoryRepository.class);
+        Category category = new Category();
+        category.setContentType(ContentType.Gallery);
+        category.setName("默认数据源");
+        categoryService.init(category);
+        category.setSite(CMSContext.RequestContext().getSite());
+
+        //保存到数据库
+        categoryRepository.save(category);
+        return category;
+    }
+
+    /**
+     * 初始化一个图库
+     *
+     * @return
+     */
+    private Gallery initGallery(Category category) {
+        GalleryService galleryService = getCMSServiceFromCMSContext(GalleryService.class);
+        ContentService contentService = getCMSServiceFromCMSContext(ContentService.class);
+        Gallery gallery = new Gallery();
+        gallery.setTitle("默认图库标题");
+        gallery.setDescription("这是一个默认图库");
+        gallery.setCategory(category);
+        contentService.init(gallery);
+        galleryService.saveGallery(gallery);
+        return gallery;
+    }
+
+    /**
+     * 初始化一个图片
+     *
+     * @param gallery
+     * @param resourceService
+     * @return
+     */
+    private GalleryItem initGalleryItem(Gallery gallery, ResourceService resourceService) throws IOException {
+        ContentService contentService = getCMSServiceFromCMSContext(ContentService.class);
+        GalleryItemService galleryItemService = getCMSServiceFromCMSContext(GalleryItemService.class);
+        GalleryItem galleryItem = new GalleryItem();
+        galleryItem.setTitle("默认图片标题");
+        galleryItem.setDescription("这是一个默认图片");
+        ClassPathResource classPathResource = new ClassPathResource("img/picImg.png", getClass().getClassLoader());
+        InputStream inputStream = classPathResource.getInputStream();
+        String imgPath = "_resources/" + UUID.randomUUID().toString() + ".png";
+        resourceService.uploadResource(imgPath, inputStream);
+        galleryItem.setThumbUri(imgPath);
+        galleryItem.setSize("xxx");
+        galleryItem.setGallery(gallery);
+        contentService.init(galleryItem);
+        galleryItemService.saveGalleryItem(galleryItem);
+        return galleryItem;
+    }
+
 
 }

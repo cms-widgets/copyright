@@ -1,4 +1,4 @@
-<div class="copyright copyright-block copyright-sf" th:id="${componentId}" xmlns:res="http://resource.jiangcai.me">
+<div xmlns:res="http://resource.jiangcai.me" class="copyright copyright-block copyright-sf" th:id="${componentId}">
     <div class="container">
         <div class="row copyright-block-top">
             <ul class="list-unstyled col-md-6 row">
@@ -12,8 +12,9 @@
                        th:text="${pageLink['name']}">首页</a>
                 </li>
             </ul>
-            <div class="copyright-sf-pull-right">
-                <img class="img-responsive center-block qrcode" rc="http://placehold.it/100x100?text=二维码" alt="二维码" th:src="${QRcode}" />
+            <div class="copyright-sf-pull-right" th:each="item:${QRCodeItems}">
+                <img class="img-responsive center-block qrcode" src="http://placehold.it/100x100?text=二维码" alt="二维码"
+                     res:src="${item.thumbUri}"/>
             </div>
         </div>
         <div class="row">
@@ -21,8 +22,9 @@
                 <p th:text="${site.copyright}" class="copyright-contact">Copyright © 2006 版权所有：上海国厚投资管理有限公司 皖ICP备xxxx号</p>
                 <p th:text="${companyAddress}" class="copyright-address">地址：上海市普陀区岚皋路567号B座505-506室</p>
             </div>
-            <div class="copyright-sf-pull-right">
-                <img class="img-responsive center-block copyright-sf-logo" res:src="${site.logoUri}" src="http://placehold.it/252x36?text=LOGO" alt="Logo"/>
+            <div class="copyright-sf-pull-right" th:each="item:${picImgItems}">
+                <img class="img-responsive center-block copyright-sf-logo" res:src="${item.thumbUri}"
+                     src="http://placehold.it/252x36?text=LOGO" alt="Logo"/>
             </div>
         </div>
     </div>

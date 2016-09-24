@@ -3,6 +3,7 @@ package com.huotu.hotcms.widget.copyright;
 import com.huotu.hotcms.widget.ComponentProperties;
 import com.huotu.hotcms.widget.Widget;
 import com.huotu.hotcms.widget.WidgetStyle;
+import com.huotu.widget.test.Editor;
 import com.huotu.widget.test.WidgetTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -27,9 +28,9 @@ public class TestWidgetInfo extends WidgetTest {
     }
 
     @Override
-    protected void editorWork(Widget widget, WebElement editor, Supplier<Map<String, Object>> currentWidgetProperties) {
-        WebElement contactInformation = editor.findElement(By.className("contactInformation"));
-        WebElement companyAddress = editor.findElement(By.className("companyAddress"));
+    protected void editorWork(Widget widget, Editor editor, Supplier<Map<String, Object>> currentWidgetProperties) {
+        WebElement contactInformation = editor.getWebElement().findElement(By.className("contactInformation"));
+        WebElement companyAddress = editor.getWebElement().findElement(By.className("companyAddress"));
         contactInformation.clear();
         companyAddress.clear();
         Actions actions = new Actions(driver);
@@ -40,29 +41,29 @@ public class TestWidgetInfo extends WidgetTest {
         assertThat(ps.get("contactInformation")).isEqualTo("abc");
         assertThat(ps.get("companyAddress")).isEqualTo("abc");
 
-        List<WebElement> lis = editor.findElement(By.id("treeView")).findElement(By.className("ztree"))
+        List<WebElement> lis = editor.getWebElement().findElement(By.id("treeView")).findElement(By.className("ztree"))
                 .findElements(By.tagName("li"));
         assertThat(lis.size()).isNotEqualTo(0);
         assertThat(lis.size()).isEqualTo(3);
 
-        WebElement addRootNodes = editor.findElement(By.className("js-addRoot"));
+        WebElement addRootNodes = editor.getWebElement().findElement(By.className("js-addRoot"));
         addRootNodes.click();
-        lis = editor.findElement(By.id("treeView")).findElement(By.className("ztree"))
+        lis = editor.getWebElement().findElement(By.id("treeView")).findElement(By.className("ztree"))
                 .findElements(By.tagName("li"));
         assertThat(lis.size()).isEqualTo(4);
 
-        lis = editor.findElement(By.id("treeView")).findElement(By.className("ztree"))
+        lis = editor.getWebElement().findElement(By.id("treeView")).findElement(By.className("ztree"))
                 .findElements(By.tagName("li"));
         lis.get(0).findElement(By.tagName("a")).click();
 
-        WebElement name = editor.findElement(By.name("text"));
-        WebElement pagePath = editor.findElement(By.name("url"));
+        WebElement name = editor.getWebElement().findElement(By.name("text"));
+        WebElement pagePath = editor.getWebElement().findElement(By.name("url"));
         name.clear();
         pagePath.clear();
         actions.sendKeys(name,"abc").build().perform();
         actions.sendKeys(pagePath,"abc").build().perform();
 
-        WebElement saveNode = editor.findElement(By.className("js-save-node"));
+        WebElement saveNode = editor.getWebElement().findElement(By.className("js-save-node"));
         saveNode.click();
 
         Map map = currentWidgetProperties.get();
@@ -101,9 +102,5 @@ public class TestWidgetInfo extends WidgetTest {
         assertThat(informaction).isEqualTo(properties.get(WidgetInfo.VALID_COPY_INFORMATION));
         assertThat(bgcolor).isEqualTo(properties.get(WidgetInfo.VALID_COPY_BCOLOR));
         assertThat(tcolor).isEqualTo(properties.get(WidgetInfo.VALID_COPY_TCOLOR));
-        List<WebElement> lis = webElement.findElement(By.id("treeView")).findElement(By.className("ztree"))
-                .findElements(By.tagName("li"));
-        assertThat(lis.size()).isNotEqualTo(0);
-        assertThat(lis.size()).isEqualTo(3);
     }
 }
