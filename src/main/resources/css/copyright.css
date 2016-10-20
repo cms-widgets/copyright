@@ -1,8 +1,8 @@
-/*[[${'#'+componentId +'.copyright'}]]*/
+/*[[${'#'+componentId +'.copyright'}]]*/ ,/*[[${'#'+componentId +'.mall-company'}]]*/
 {
     background: /*[[${copyBColor}]]*/ #fff;
 }
-/*[[${'#'+componentId+'.copyright a'}]]*/, /*[[${'#'+componentId +'.copyright p'}]]*/
+/*[[${'#'+componentId+'.copyright a'}]]*/,/*[[${'#'+componentId+'.links a'}]]*/, /*[[${'#'+componentId +'.copyright p'}]]*/,/*[[${'#'+componentId +' p'}]]*/
 {
    color:/*[[${copyTColor}]]*/ #444;
 }

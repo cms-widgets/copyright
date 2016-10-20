@@ -1,0 +1,20 @@
+<div xmlns:th="http://www.thymeleaf.org" class="mall-company " th:id="${componentId}">
+    <div class="links">
+        <span th:each="pageLink:${pageLinkList}">
+            <a th:if="${pageLink['flag']==0}" th:href="${pageLink['linkPath']}" href="javascript:void(0)"
+               th:text="${pageLink['name']}" target="_blank">首页</a>
+
+            <a target="_blank" href="javascript:void(0)"
+               th:if="${pageLink['flag']==1}" th:href="@{/_web/{path}(path=${@cmsDataSourceService.findPageInfoContent(pageLink['linkPath'])!=null
+                     ?@cmsDataSourceService.findPageInfoContent(pageLink['linkPath']).pagePath:''})}"
+               th:text="${pageLink['name']}">首页</a>
+        </span>
+    </div>
+    <div>
+        <div class="col-sm-8">
+            <p th:text="'版权：'+${site.copyright}" class="copyright-contact">Copyright © 2006 版权所有：杭州火图科技有限公司
+                皖ICP备xxxx号</p>
+            <p th:text="'地址：'+${companyAddress}" class="copyright-address">地址：杭州市滨江区智慧e谷B幢4楼</p>
+        </div>
+    </div>
+</div>

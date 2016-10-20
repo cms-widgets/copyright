@@ -1,14 +1,16 @@
-<div xmlns:res="http://resource.jiangcai.me" class="copyright copyright-block copyright-sf" th:id="${componentId}">
+<div xmlns:res="http://resource.jiangcai.me" xmlns:th="http://www.thymeleaf.org"
+     class="copyright copyright-block copyright-sf" th:id="${componentId}">
     <div class="container">
         <div class="row copyright-block-top">
             <ul class="list-unstyled col-md-6 row">
                 <li th:each="pageLink:${pageLinkList}" class="col-md-3">
-                    <a th:if="${pageLink['flag']==0}" th:href="${pageLink['linkPath']}" href="index.html"
+                    <a th:if="${pageLink['flag']==0}" th:href="${pageLink['linkPath']}" href="javascript:void(0)"
                        th:text="${pageLink['name']}">首页</a>
 
                     <a th:if="${pageLink['flag']==1}" th:href="@{/_web/{path}
                     (path=${@cmsDataSourceService.findPageInfoContent(pageLink['linkPath'])!=null
-                     ?@cmsDataSourceService.findPageInfoContent(pageLink['linkPath']).pagePath:''})}" href="index.html"
+                     ?@cmsDataSourceService.findPageInfoContent(pageLink['linkPath']).pagePath:''})}"
+                       href="javascript:void(0)"
                        th:text="${pageLink['name']}">首页</a>
                 </li>
             </ul>
