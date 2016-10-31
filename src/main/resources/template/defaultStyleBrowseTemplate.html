@@ -20,10 +20,10 @@
             <p th:text="${contactInformation}" class="copyright-contact">
                 业务热线
             </p>
-            <p th:text="${companyAddress}" class="copyright-address">
+            <p th:text="'地址：'+${companyAddress}" class="copyright-address">
                 公司地址
             </p>
-            <p th:text="${site.copyright}" class="copyright-content">
+            <p th:text="'版权：'+${site.copyright}" class="copyright-content">
                 Copyright©2013-2016
             </p>
         </div>

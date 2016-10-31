@@ -76,21 +76,25 @@ public class TestWidgetInfo extends WidgetTest {
     protected void browseWork(Widget widget, WidgetStyle style, Function<ComponentProperties, WebElement> uiChanger) throws IOException {
         ComponentProperties properties = widget.defaultProperties(resourceService);
         WebElement webElement = uiChanger.apply(properties);
-        List<WebElement> list = webElement.findElements(By.tagName("li"));
+        List<WebElement> list;
+        if (style instanceof MallWidgetStyle) {
+            list = webElement.findElements(By.tagName("span"));
+        } else {
+            list = webElement.findElements(By.tagName("li"));
+        }
         assertThat(list).isNotEmpty();
         assertThat(list.size()).isEqualTo(3);
-        if (!style.id().equals("siFanCopyrightStyle")){
+        if (style instanceof DefaultWidgetStyle) {
             WebElement infomartion = webElement.findElement(By.className("copyright-contact"));
             assertThat(infomartion.getText()).isEqualTo("400-1818-357 加盟热线：400-1008-013");
         }
         WebElement address = webElement.findElement(By.className("copyright-address"));
-        assertThat(address.getText()).isEqualTo("杭州市滨江区阡陌路482号智慧e谷B幢4楼");
+        assertThat(address.getText()).isEqualTo("地址：杭州市滨江区阡陌路482号智慧e谷B幢4楼");
     }
 
     @Override
     protected void editorBrowseWork(Widget widget, Function<ComponentProperties, WebElement> uiChanger
             , Supplier<Map<String, Object>> currentWidgetProperties) throws IOException {
-
         ComponentProperties properties = widget.defaultProperties(resourceService);
         WebElement webElement = uiChanger.apply(properties);
         driver.findElement(By.id("editorInit")).click();
@@ -103,4 +107,6 @@ public class TestWidgetInfo extends WidgetTest {
         assertThat(bgcolor).isEqualTo(properties.get(WidgetInfo.VALID_COPY_BCOLOR));
         assertThat(tcolor).isEqualTo(properties.get(WidgetInfo.VALID_COPY_TCOLOR));
     }
+
+
 }

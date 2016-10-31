@@ -147,8 +147,7 @@ public class WidgetInfo implements Widget, PreProcessWidget {
         properties.put(VALID_COPY_ADDRESS, "杭州市滨江区阡陌路482号智慧e谷B幢4楼");
         properties.put(VALID_COPY_BCOLOR, "#fff");
         // 随意找一个数据源,如果没有。那就没有。。
-        GalleryRepository galleryRepository = CMSContext.RequestContext().getWebApplicationContext()
-                .getBean(GalleryRepository.class);
+        GalleryRepository galleryRepository = getCMSServiceFromCMSContext(GalleryRepository.class);
         List<Gallery> galleryList = galleryRepository.findByCategory_Site(CMSContext.RequestContext().getSite());
         if (galleryList.isEmpty()) {
             Gallery gallery = initGallery(initCategory());
@@ -198,26 +197,13 @@ public class WidgetInfo implements Widget, PreProcessWidget {
     public void prepareContext(WidgetStyle style, ComponentProperties properties, Map<String, Object> variables, Map<String, String> parameters) {
         String qrCodeSerial = (String) properties.get(VALID_COPY_QRCODE);
         String picImgSerial = (String) properties.get(VALID_COPY_PICIMG);
-        CMSDataSourceService cmsDataSourceService = CMSContext.RequestContext().getWebApplicationContext()
-                .getBean(CMSDataSourceService.class);
+        CMSDataSourceService cmsDataSourceService = getCMSServiceFromCMSContext(CMSDataSourceService.class);
         List<GalleryItemModel> qrCode = cmsDataSourceService.findGalleryItems(qrCodeSerial, 1);
         List<GalleryItemModel> picImg = cmsDataSourceService.findGalleryItems(picImgSerial, 1);
         variables.put(VALID_COPY_QRCODE_ITEMS, qrCode);
         variables.put(VALID_COPY_PICIMG_ITEMS, picImg);
     }
 
-
-    /**
-     * 从CMSContext中获取CMSService的实现
-     *
-     * @param cmsService 需要返回的service接口
-     * @param <T>        返回的service实现
-     * @return
-     */
-    private <T> T getCMSServiceFromCMSContext(Class<T> cmsService) {
-        return CMSContext.RequestContext().
-                getWebApplicationContext().getBean(cmsService);
-    }
 
     /**
      * 初始化数据源
