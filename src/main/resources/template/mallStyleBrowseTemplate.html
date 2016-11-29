@@ -2,12 +2,12 @@
     <div class="links">
         <span th:each="pageLink:${pageLinkList}">
             <a th:if="${pageLink['flag']==0}" th:href="${pageLink['linkPath']}" href="javascript:void(0)"
-               th:text="${pageLink['name']}" target="_blank">首页</a>
+               th:text="${pageLink['name']}+'|'" target="_blank">首页</a>
 
             <a target="_blank" href="javascript:void(0)"
                th:if="${pageLink['flag']==1}" th:href="@{/_web/{path}(path=${@cmsDataSourceService.findPageInfoContent(pageLink['linkPath'])!=null
                      ?@cmsDataSourceService.findPageInfoContent(pageLink['linkPath']).pagePath:''})}"
-               th:text="${pageLink['name']}">首页</a>
+               th:text="${pageLink['name']}+'|'">首页</a>
         </span>
     </div>
     <div>

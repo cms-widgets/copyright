@@ -132,7 +132,6 @@ public class WidgetInfo implements Widget, PreProcessWidget {
                 || copyPBottom.equals("")) {
             throw new IllegalArgumentException("控件属性缺少");
         }
-
     }
 
     @Override

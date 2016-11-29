@@ -13,7 +13,7 @@
 
     <groupId>com.huotu.hotcms.widget.copyright</groupId>
     <artifactId>copyright</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>copyright</name>
@@ -68,13 +68,13 @@
         <dependency>
             <groupId>com.huotu.hotcms</groupId>
             <artifactId>widget-test</artifactId>
-            <version>1.1-SNAPSHOT</version>
+            <version>1.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.huotu.hotcms</groupId>
             <artifactId>widget-api</artifactId>
-            <version>1.1-SNAPSHOT</version>
+            <version>1.2</version>
         </dependency>
     </dependencies>
 
@@ -124,7 +124,7 @@
             <plugin>
                 <groupId>com.huotu.hotcms</groupId>
                 <artifactId>widget-preview</artifactId>
-                <version>1.1-SNAPSHOT</version>
+                <version>1.2</version>
             </plugin>
         </plugins>
     </build>
