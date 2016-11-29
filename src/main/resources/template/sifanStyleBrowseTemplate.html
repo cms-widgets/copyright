@@ -1,7 +1,9 @@
 <div xmlns:res="http://resource.jiangcai.me" xmlns:th="http://www.thymeleaf.org"
-     class="copyright copyright-block copyright-sf" th:id="${componentId}">
+     class="copyright copyright-2" th:id="${componentId}">
+    <!--TODO-->
+    <!--居中有 class container 不居中 没有class 下面是居中情况-->
     <div class="container">
-        <div class="row copyright-block-top">
+        <div class="row copyright-cutting">
             <ul class="list-unstyled col-md-6 row">
                 <li th:each="pageLink:${pageLinkList}" class="col-md-3">
                     <a th:if="${pageLink['flag']==0}" th:href="${pageLink['linkPath']}" href="javascript:void(0)"
@@ -14,7 +16,7 @@
                        th:text="${pageLink['name']}">首页</a>
                 </li>
             </ul>
-            <div class="copyright-sf-pull-right" th:each="item:${QRCodeItems}">
+            <div class="copyright-pull-right" th:each="item:${QRCodeItems}">
                 <img class="img-responsive center-block qrcode" src="http://placehold.it/100x100?text=二维码" alt="二维码"
                      res:src="${item.thumbUri}"/>
             </div>
@@ -25,8 +27,8 @@
                     皖ICP备xxxx号</p>
                 <p th:text="'地址：'+${companyAddress}" class="copyright-address">地址：上海市普陀区岚皋路567号B座505-506室</p>
             </div>
-            <div class="copyright-sf-pull-right" th:each="item:${picImgItems}">
-                <img class="img-responsive center-block copyright-sf-logo" res:src="${item.thumbUri}"
+            <div class="copyright-pull-right" th:each="item:${picImgItems}">
+                <img class="img-responsive center-block copyright-extraImg" res:src="${item.thumbUri}"
                      src="http://placehold.it/252x36?text=LOGO" alt="Logo"/>
             </div>
         </div>

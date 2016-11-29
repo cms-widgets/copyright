@@ -6,3 +6,49 @@
 {
    color:/*[[${copyTColor}]]*/ #444;
 }
+
+/*分割线颜色*/
+.copyright {
+    background-color: #fff;
+    border-top: 1px solid #bcbcbc;
+}
+/*分割线颜色*/
+.copyright .list-unstyled {
+    border-bottom: 1px solid #bcbcbc;
+}
+/*文字颜色*/
+.copyright .list-unstyled li a {
+    color: #333;
+}
+/*文字选中颜色*/
+.copyright .list-unstyled li a:hover {
+    color: #333;
+}
+/*其他信息颜色*/
+.copyright p {
+    color: #999;
+}
+
+@media (min-width: 769px) {
+    /*版权内边距*/
+    .copyright {
+        padding-top: 20px;
+        padding-left: auto;
+        padding-right: auto;
+        padding-bottom: 70px;
+    }
+    /*分割线颜色*/
+    .copyright .list-unstyled > li {
+        border-right: 1px solid #bcbcbc;
+    }
+
+    /*分割线颜色*/
+    .copyright-2 .list-unstyled > li {
+        border-right: 1px solid #bcbcbc;
+    }
+
+    /*分割线颜色*/
+    .copyright .copyright-cutting {
+        border-bottom: 1px solid #bcbcbc;
+    }
+}

@@ -1,4 +1,4 @@
-<div xmlns:th="http://www.thymeleaf.org" class="mall-company " th:id="${componentId}">
+<div xmlns:th="http://www.thymeleaf.org" class="mall-company" th:id="${componentId}">
     <div class="links">
         <span th:each="pageLink:${pageLinkList}">
             <a th:if="${pageLink['flag']==0}" th:href="${pageLink['linkPath']}" href="javascript:void(0)"

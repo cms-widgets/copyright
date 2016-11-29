@@ -1,4 +1,60 @@
 <div class="borderBoxs">
+    <!--TODO-->
+    <div class="form-group clearfix">
+        <label class="col-xs-3">通栏 / 居中</label>
+        <div class="col-xs-3">
+            <label class="radio-inline">
+                <input type="radio" name="layout" value="" checked> 通栏
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="layout" value="container"> 居中
+            </label>
+        </div>
+        <label class="col-xs-3 control-label">分割线颜色：</label>
+        <div class="col-xs-3">
+            <input type="text" name="cuttingColor" class="form-control color-picker">
+        </div>
+    </div>
+    <div class="form-group clearfix">
+        <label class="col-xs-3 control-label">背景颜色：</label>
+        <div class="col-xs-3">
+            <input type="text" name="backgroundColor" class="form-control color-picker">
+        </div>
+        <label class="col-xs-3 control-label">文字颜色：</label>
+        <div class="col-xs-3">
+            <input type="text" name="fontColor" class="form-control color-picker">
+        </div>
+    </div>
+    <div class="form-group clearfix">
+        <label class="col-xs-3 control-label">其他信息颜色：</label>
+        <div class="col-xs-3">
+            <input type="text" name="activeColor" class="form-control color-picker">
+        </div>
+        <label class="col-xs-3 control-label">文字选中颜色：</label>
+        <div class="col-xs-3">
+            <input type="text" name="hoverColor" class="form-control color-picker">
+        </div>
+    </div>
+    <div class="form-group clearfix">
+        <ul class="attribute-layout">
+            <li class="attribute-item title-element">
+                <strong>&nbsp;&nbsp;导航内边距：</strong>
+            </li>
+            <li class="attribute-item">
+                <input type="text" name="paddingTop" class="form-control" placeholder="上" >
+            </li>
+            <li class="attribute-item">
+                <input type="text" name="paddingRight" class="form-control" placeholder="右" >
+            </li>
+            <li class="attribute-item">
+                <input type="text" name="paddingBottom" class="form-control" placeholder="下">
+            </li>
+            <li class="attribute-item">
+                <input type="text" name="paddingLeft" class="form-control" placeholder="左" >
+            </li>
+        </ul>
+    </div>
+    <!--TODO-->
     <form class="form-horizontal">
         <div class="form-group clearfix">
             <label class="col-sm-3 control-label">背景颜色</label>
@@ -32,17 +88,17 @@
                 <span data-name="QRcodeSerial" class="gallery-content"></span>
                 <div data-name="QRcodeSerial" class="gallery-item-area">
                     <!--img item-->
-                    <img src="!{url}" title="是!{title}么?"/>
+                    <img src="!{url}" title="!{title}"/>
                 </div>
             </div>
         </div>
         <div class="form-group clearfix">
-            <label class="col-sm-3 control-label">图片：</label>
+            <label class="col-sm-3 control-label">额外图片：</label>
             <div class="col-sm-9">
                 <span data-name="picImgSerial" class="gallery-content"></span>
                 <div data-name="picImgSerial" class="gallery-item-area">
                     <!--img item-->
-                    <img src="!{url}" title="是!{title}么?"/>
+                    <img src="!{url}" title="!{title}"/>
                 </div>
             </div>
         </div>
