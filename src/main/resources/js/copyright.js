@@ -5,6 +5,15 @@ CMSWidgets.initWidget({
 // 编辑器相关
     editor: {
         saveComponent: function (onFailed) {
+            this.properties.copyLayout = $("input[name='copyLayout']:checked").val();
+            this.properties.cuttingColor = $("input[name='cuttingColor']").val();
+            this.properties.activeColor = $("input[name='activeColor']").val();
+            this.properties.hoverColor = $("input[name='hoverColor']").val();
+            this.properties.copyPaddingTop = $("input[name='copyPaddingTop']").val();
+            this.properties.paddingRight = $("input[name='paddingRight']").val();
+            this.properties.copyPaddingBottom = $("input[name='copyPaddingBottom']").val();
+            this.properties.paddingLeft = $("input[name='paddingLeft']").val();
+
             var me = this;
             $.each($(".contactInformation"), function (i, obj) {
                 me.properties.contactInformation = $(obj).val();

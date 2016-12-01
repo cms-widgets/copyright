@@ -83,7 +83,7 @@ public class WidgetInfo implements Widget, PreProcessWidget {
 
     @Override
     public WidgetStyle[] styles() {
-        return new WidgetStyle[]{new DefaultWidgetStyle(), new SiFanWidgetStyle(), new MallWidgetStyle()};
+        return new WidgetStyle[]{new DefaultWidgetStyle(), new SiFanWidgetStyle(), new HyysWidgetStyle(), new MallWidgetStyle()};
     }
 
     @Override
@@ -94,6 +94,8 @@ public class WidgetInfo implements Widget, PreProcessWidget {
         map.put("thumbnail/sifanCopyright.png", new ClassPathResource("thumbnail/sifanCopyright.png"
                 , getClass().getClassLoader()));
         map.put("thumbnail/mallstyleThumbnail.png", new ClassPathResource("thumbnail/mallstyleThumbnail.png"
+                , getClass().getClassLoader()));
+        map.put("thumbnail/hyys.png", new ClassPathResource("thumbnail/hyys.png"
                 , getClass().getClassLoader()));
         map.put("img/code.jpg", new ClassPathResource("img/code.jpg", getClass().getClassLoader()));
         map.put("img/picImg.png", new ClassPathResource("img/picImg.png", getClass().getClassLoader()));
@@ -187,6 +189,39 @@ public class WidgetInfo implements Widget, PreProcessWidget {
             map.put("id", pageInfo.getId());
             pageLinks.add(map);
         }
+        Map<String, Object> map2 = new HashMap<>();
+        List<Map<String, Object>> children = new ArrayList<>();
+        Map<String, Object> map21 = new HashMap<>();
+        map21.put("name", "公司动态");
+        map21.put("linkPath", "");
+        map21.put("visibleValue", "");
+        map21.put("flag", 1);
+        map21.put("visible", "");
+        map21.put("visibleName", "");
+        map21.put("pid", 4);
+
+        Map<String, Object> map22 = new HashMap<>();
+        map22.put("name", "行业动态");
+        map22.put("linkPath", "");
+        map22.put("visibleValue", "");
+        map22.put("visible", "");
+        map22.put("visibleName", "");
+        map22.put("flag", 1);
+        map22.put("pid", 4);
+        children.add(map21);
+        children.add(map22);
+
+        map2.put("name", "动态资讯");
+        map2.put("linkPath", "");
+        map2.put("visibleValue", "");
+        map2.put("isParent", "true");
+        map2.put("visible", "");
+        map2.put("visibleName", "");
+        map2.put("children", children);
+        map2.put("flag", 0);
+        map2.put("id", 4);
+        pageLinks.add(map2);
+
         properties.put(VALID_COPY_PAGElINKS, pageLinks);
         return properties;
     }

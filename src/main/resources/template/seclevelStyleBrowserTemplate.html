@@ -1,51 +1,44 @@
-<div class="copyright copyright-3">
-    <div class="container">
+<div xmlns:res="http://resource.jiangcai.me"
+     xmlns:th="http://www.thymeleaf.org" class="copyright copyright-3" th:id="${componentId}">
+    <div class="container" th:class="${copyLayout}">
         <div class="row copyright-cutting">
             <ul class="list-unstyled col-md-10">
-                <li>
-                    <a href="#">关于我们</a>
-                    <ul class="sub-list">
-                        <li><a href="#">公司介绍</a></li>
-                        <li><a href="#">养生知识</a></li>
+                <li th:each="pageLink:${pageLinkList}">
+                    <a th:if="${pageLink['flag']==0}" th:href="${pageLink['linkPath']}" href="javascript:void(0)"
+                       th:text="${pageLink['name']}">首页</a>
+
+                    <a href="javascript:void(0)"
+                       th:if="${pageLink['flag']==1}" th:href="@{/_web/{path}(path=${@cmsDataSourceService.findPageInfoContent(pageLink['linkPath'])!=null
+                     ?@cmsDataSourceService.findPageInfoContent(pageLink['linkPath']).pagePath:''})}"
+                       th:text="${pageLink['name']}">首页</a>
+
+                    <ul class="sub-list" th:if="${pageLink['isParent']}">
+                        <li th:each="child: ${pageLink['children']}">
+                            <a th:if="${(child['visibleValue']=='' or child['visibleValue']==true) and
+                            child['flag']==0}" th:text="${child['name']}"
+                               th:href="${child['linkPath']}"
+                               href="javascript:;">首页</a>
+                            <a th:if="${(child['visibleValue']=='' or child['visibleValue']==true) and
+                            child['flag']==1}" th:text="${child['name']}"
+                               th:href="@{/_web/{pagePath}(pagePath=${@cmsDataSourceService.findPageInfoContent(child['linkPath'])
+                               !=null?@cmsDataSourceService.findPageInfoContent(child['linkPath']).pagePath:''})}"
+                               href="javascript:;">首页</a>
+                        </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="#">资讯中心</a>
-                    <ul class="sub-list">
-                        <li><a href="#">春季养生</a></li>
-                        <li><a href="#">养生知识</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">招商加盟</a>
-                    <ul class="sub-list">
-                        <li><a href="#">公司介绍</a></li>
-                        <li><a href="#">养生知识</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">产品中心</a>
-                    <ul class="sub-list">
-                        <li><a href="#">工艺制作</a></li>
-                        <li><a href="#">养生知识</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">LookBook</a>
-                    <ul class="sub-list">
-                        <li><a href="#">公司介绍</a></li>
-                        <li><a href="#">养生知识</a></li>
-                    </ul>
-                </li>
+
             </ul>
             <div class="col-md-2 clearfix">
-                <img class="img-responsive center-block copyright-pull-right qrcode" src="http://placehold.it/100x100?text=二维码" alt="二维码"/>
+                <img th:each="item:${picImgItems}" class="img-responsive center-block copyright-pull-right qrcode"
+                     res:src="${item.thumbUri}"
+                     src="http://placehold.it/100x100?text=图片" alt="图片"/>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <p class="copyright-contact">Copyright © 2006 版权所有：上海国厚投资管理有限公司 皖ICP备xxxx号</p>
-                <p class="copyright-address">地址：上海市普陀区岚皋路567号B座505-506室</p>
+                <p class="copyright-contact" th:text="'版权：'+${site.copyright}">Copyright © 2006 版权所有：上海国厚投资管理有限公司
+                    皖ICP备xxxx号</p>
+                <p class="copyright-address" th:text="'地址：'+${companyAddress}">地址：上海市普陀区岚皋路567号B座505-506室</p>
             </div>
         </div>
     </div>

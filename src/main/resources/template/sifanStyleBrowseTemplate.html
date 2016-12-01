@@ -1,8 +1,6 @@
 <div xmlns:res="http://resource.jiangcai.me" xmlns:th="http://www.thymeleaf.org"
      class="copyright copyright-2" th:id="${componentId}">
-    <!--TODO-->
-    <!--居中有 class container 不居中 没有class 下面是居中情况-->
-    <div class="container">
+    <div class="" th:class="${copyLayout}">
         <div class="row copyright-cutting">
             <ul class="list-unstyled col-md-6 row">
                 <li th:each="pageLink:${pageLinkList}" class="col-md-3">
