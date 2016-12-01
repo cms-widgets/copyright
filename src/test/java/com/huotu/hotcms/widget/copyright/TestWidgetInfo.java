@@ -34,8 +34,8 @@ public class TestWidgetInfo extends WidgetTest {
         contactInformation.clear();
         companyAddress.clear();
         Actions actions = new Actions(driver);
-        actions.sendKeys(contactInformation,"abc").build().perform();
-        actions.sendKeys(companyAddress,"abc").build().perform();
+        actions.sendKeys(contactInformation, "abc").build().perform();
+        actions.sendKeys(companyAddress, "abc").build().perform();
         Map<String, Object> ps = currentWidgetProperties.get();
 
         assertThat(ps.get("contactInformation")).isEqualTo("abc");
@@ -60,14 +60,14 @@ public class TestWidgetInfo extends WidgetTest {
         WebElement pagePath = editor.getWebElement().findElement(By.name("url"));
         name.clear();
         pagePath.clear();
-        actions.sendKeys(name,"abc").build().perform();
-        actions.sendKeys(pagePath,"abc").build().perform();
+        actions.sendKeys(name, "abc").build().perform();
+        actions.sendKeys(pagePath, "abc").build().perform();
 
         WebElement saveNode = editor.getWebElement().findElement(By.className("js-save-node"));
         saveNode.click();
 
         Map map = currentWidgetProperties.get();
-        List<Map<String ,Object>> links = (List<Map<String, Object>>) map.get(WidgetInfo.VALID_COPY_PAGElINKS);
+        List<Map<String, Object>> links = (List<Map<String, Object>>) map.get(WidgetInfo.VALID_COPY_PAGElINKS);
         assertThat(links.get(0).get("name").toString()).isEqualTo("abc");
         assertThat(links.get(0).get("linkPath").toString()).isEqualTo("abc");
     }
@@ -83,7 +83,12 @@ public class TestWidgetInfo extends WidgetTest {
             list = webElement.findElements(By.tagName("li"));
         }
         assertThat(list).isNotEmpty();
-        assertThat(list.size()).isEqualTo(3);
+        if (style instanceof HyysWidgetStyle) {
+            assertThat(list.size()).isEqualTo(6);
+        } else {
+            assertThat(list.size()).isEqualTo(4);
+        }
+
         if (style instanceof DefaultWidgetStyle) {
             WebElement infomartion = webElement.findElement(By.className("copyright-contact"));
             assertThat(infomartion.getText()).isEqualTo("400-1818-357 加盟热线：400-1008-013");
