@@ -40,7 +40,7 @@ public class DefaultWidgetStyle implements WidgetStyle{
 
     @Override
     public String description() {
-        return "基于bootstrap样式的版权信息";
+        return "默认样式";
     }
 
     @Override

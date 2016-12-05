@@ -31,7 +31,7 @@ public class HyysWidgetStyle implements WidgetStyle {
 
     @Override
     public String description() {
-        return "基于bootstrap样式的版权信息";
+        return "有二级链接的版权样式，仅支持两级关系";
     }
 
     @Override
