@@ -46,9 +46,9 @@ public class DefaultWidgetStyle implements WidgetStyle{
     @Override
     public String description(Locale locale) {
         if (locale.equals(Locale.CHINA)) {
-            return "基于bootstrap样式的  ";
+            return "默认的版权样式，该样式底部图片是当前站点的logo。";
         }
-        return "Based on the bootstrap style by copyright";
+        return "The default copyright style, the style at the bottom of the picture is the current site of the logo.";
     }
 
     @Override

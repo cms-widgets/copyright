@@ -71,9 +71,9 @@ public class WidgetInfo implements Widget, PreProcessWidget {
     @Override
     public String description(Locale locale) {
         if (locale.equals(Locale.CHINA)) {
-            return "这是一个版权信息，你可以对组件进行自定义修改。";
+            return "这是一个版权信息";
         }
-        return "This is a copyright,  you can make custom change the component.";
+        return "This is a copyright";
     }
 
     @Override
@@ -127,11 +127,11 @@ public class WidgetInfo implements Widget, PreProcessWidget {
             }
         }
         //加入控件独有的属性验证
-        String copyPTop = (String) componentProperties.get(VALID_COPY_ADDRESS);
-        String copyPBottom = (String) componentProperties.get(VALID_COPY_INFORMATION);
+        String companyAddress = (String) componentProperties.get(VALID_COPY_ADDRESS);
+        String contactInformation = (String) componentProperties.get(VALID_COPY_INFORMATION);
         List<Map> pageLinks = (List<Map>) componentProperties.get(VALID_COPY_PAGElINKS);
-        if (copyPTop == null || copyPBottom == null || pageLinks == null || copyPTop.equals("")
-                || copyPBottom.equals("")) {
+        if (companyAddress == null || contactInformation == null || pageLinks == null || companyAddress.equals("")
+                || contactInformation.equals("")) {
             throw new IllegalArgumentException("控件属性缺少");
         }
     }

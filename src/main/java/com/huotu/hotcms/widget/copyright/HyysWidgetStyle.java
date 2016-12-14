@@ -31,15 +31,16 @@ public class HyysWidgetStyle implements WidgetStyle {
 
     @Override
     public String description() {
-        return "有二级链接的版权样式，仅支持两级关系";
+        return "二级链接版权控件，支持二级链接展示，图片展示，版权地址信息显示";
     }
 
     @Override
     public String description(Locale locale) {
         if (locale.equals(Locale.CHINA)) {
-            return "基于bootstrap样式的 ";
+            return description();
         }
-        return "Based on the bootstrap style by copyright";
+        return "Two link copyright controls, support for the two link display, picture display," +
+                " copyright address information display";
     }
 
     @Override

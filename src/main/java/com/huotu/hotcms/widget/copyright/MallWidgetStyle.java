@@ -31,15 +31,15 @@ public class MallWidgetStyle implements WidgetStyle {
 
     @Override
     public String description() {
-        return "基于bootstrap样式的版权信息";
+        return "商城版权样式，该样式不展示图片、二维码及业务热线。";
     }
 
     @Override
     public String description(Locale locale) {
         if (locale.equals(Locale.CHINA)) {
-            return "基于bootstrap样式的 ";
+            return description();
         }
-        return "Based on the bootstrap style by copyright";
+        return "Mall copyright style, the style does not show pictures, two-dimensional code and business hotline.";
     }
 
     @Override

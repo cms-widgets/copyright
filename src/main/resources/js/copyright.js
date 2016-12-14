@@ -13,25 +13,15 @@ CMSWidgets.initWidget({
             this.properties.paddingRight = $("input[name='paddingRight']").val();
             this.properties.copyPaddingBottom = $("input[name='copyPaddingBottom']").val();
             this.properties.paddingLeft = $("input[name='paddingLeft']").val();
-
+            this.properties.contactInformation = $("input[name='contactInformation']").val();
+            this.properties.companyAddress = $("input[name='companyAddress']").val();
+            this.properties.copyBColor = $("input[name='copyBColor']").val();
+            this.properties.copyTColor = $("input[name='copyTColor']").val();
             var me = this;
-            $.each($(".contactInformation"), function (i, obj) {
-                me.properties.contactInformation = $(obj).val();
-            });
-
             if (me.properties.QRcodeSerial == '' || me.properties.picImgSerial == '') {
                 onFailed("控件缺乏参数，请填写参数");
                 return;
             }
-            $.each($(".companyAddress"), function (i, obj) {
-                me.properties.companyAddress = $(obj).val();
-            });
-            $.each($(".copyBColor"), function (i, obj) {
-                me.properties.copyBColor = $(obj).val();
-            });
-            $.each($(".copyTColor"), function (i, obj) {
-                me.properties.copyTColor = $(obj).val();
-            });
             var nodes = $.getTreeViewData();
             me.properties.pageLinkList = nodes;
             if (me.properties.contactInformation == '' || me.properties.companyAddress == '') {

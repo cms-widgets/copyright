@@ -31,15 +31,16 @@ public class SiFanWidgetStyle implements WidgetStyle {
 
     @Override
     public String description() {
-        return "基于bootstrap样式的版权信息";
+        return "版权样式控件,该样式仅展示链接列表，站点logo,二维码图片。";
     }
 
     @Override
     public String description(Locale locale) {
         if (locale.equals(Locale.CHINA)) {
-            return "基于bootstrap样式的 ";
+            return description();
         }
-        return "Based on the bootstrap style by copyright";
+        return "Copyright style controls, the style is only to show the list of links, site logo," +
+                " two-dimensional code pictures.";
     }
 
     @Override
